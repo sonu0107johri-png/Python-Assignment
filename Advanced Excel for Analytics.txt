@@ -1,0 +1,25 @@
+ADVANCED EXCEL FOR ANALYTICS.
+
+SECTION A.
+
+Q.1. What is the first step an analyst should take before opening a dataset to investigate flat revenue despite increased traffic?
+
+A.1. The very step every analyst should do is UNDERSTAND and VALIDATE data. Before jumping into any conclusions, the analyst should first check:
+	- credibility of the data
+	- whether the data is completed or not
+	- biasness of the data - data should be unbiased
+So, the analyst should first perform data cleaning - data validation - KPI Definition Check. 
+It is always better to check from multiple sources in order to be perfectly sure for the data credibility and biasness.
+
+Q.2. What specific characteristics distinguish a "Key Performance Indicator" (KPI) from a standard business metric?
+
+A.2. Key Performance Indicator (KPI) as the name suggest, is the key parameter that directly and influentially affects the outcome of data. While standard business metric may or may not be consequential for the entire understanding of the data and dataset. A KPI is a strategic metric tied directly to a business goal while a standard business metric is simply a measurement. Simply understanding, a business metric means any business activity like website visitors, employees on leaves, transport cost etc. These are useful measurements, but may not directly determine success. A KPI is important, goal-oriented and performance-focused. It directly shows whether the business is achieving an important objective or not like revenue, sales, cash flows, employee conditions etc. KPIs are the focus of the major decision making in the proper growth of the business, keeping other standard business metrics in mind.
+
+Q.3. Classify Average Order Value (AOV) and Customer Repeat Rate as either Descriptive or Diagnostic KPIs and state the questions they answer.
+
+A.3. A Descriptive KPI is a KPI that describes - What has already happened. It focuses on historic or current performance data. Purpose of the Descriptive KPI is to monitor performance, summarize business activity, understand trends, and track past outcomes. They do NOT predict the future directly. A Diagnostic KPI is a KPI used to understand - why did something happened. It helps analysts identify - causes, problems, root reasons, and performance drivers. Main purpose of diagnostic KPI is to tell "why did it happen" in contrast to "What happened." as in descriptive KPI. 
+Based on the definitions of the descriptive and diagnostic KPIs, I would like to classify Average Order Value into the former category as it summarizes the customer purchasing behavior. Customer Repeat Rate automatically falls in the Diagnostic KPI as it determines how many customers return and purchase again.
+
+Q.4. Provide one justified reason to choose Excel and one reason to choose Power BI for analyzing Monthly Revenue.
+
+A.4.   
