@@ -1,0 +1,1660 @@
+Database Management System
+
+Data: Analysis: Analyze the data
+
+Relational Database: RDBMS: SQL
+
+Structured Query Language
+
+Software Tools:
+
+MySQL
+
+Oracle
+
+PostgreSQL
+
+SQLLite
+
+Cloud
+AWS - Amazon Web Services
+Azure - Microsoft - TQL - Transact Query Language
+Google Cloud
+
+Database - Collection of tables - Schema
+
+Database vs Schema
+
+Database - collection
+
+Schema - A database schema is the blueprint or formal 
+structure of a database. It defines how data is organized,
+how tables are structured, and how they relate to one another.
+While the schema acts as the skeleton, it does not actually
+contain any data; the data present at a specific point in time 
+is instead called a database instance.
+
+tables - collection of rows and columns
+row - tuple - record
+column - fields
+
+SQL commands are categorized into different "language"  based on whether    
+they affect the database's structure, the actual data or 
+DDL - Data Definition Language- Create, Alter, Drop, Truncate, Rename
+
+DML- Data Modification Language - Insert, Update, Delete, Call, Explain Call
+
+DCL - Data Control Language - Grant, Revoke
+
+TCL - Transaction Contro3 Language - Commit, Rollback, Savepoint
+
+A - Atomicity
+
+C - Consistency
+
+I - Isolation
+
+D - Durability
+
+DQL - Data Query Language - Select
+
+TQL - Transact Query Language
+
+PL/SQL -
+
+Advanced SQL Queries
+
+create the table
+create table <table-name> <fieldsname data type>;
+
+Data Types:
+Numerical Data :
+Integer - 2, 4, 5, 6, 7 etc.
+smallint - 2 bytes
+int - 4 bytes
+mediumint - 3 bytes
+tinyint - 1 bytes
+bigint - 8 bytes
+
+Decimal - 2.564, 3.14567
+float
+double
+decimal(8, 2)
+
+student :
+id : int
+
+constraints:
+Primary Key: only one field in one table
+Foreign Key: parent child relationship: connect multiple tables
+Not Null: not insert null value
+Unique Key: multiple fields in one table
+Default: Insert default value if value will not pass
+Check: Condition will be check 
+
+Functions and Operator:
+
+Functions 
+
+Aggregate Functions
+COUNT() - Return the number of rows that match a specific condition.
+COUNT(*) - Include all rows, even those with Null values.
+COUNT(column) - Only counts rows where the column value is not Null
+SUM() - Calculates the total sum of values in a numeric column, ignoring Null values.
+AVG() - Computes the average (mean)   
+
+Functions
+String Functions
+date and time Functions
+
+Operators
+Like: pattern matching
+abc% 
+
+Date - 16-05-2026
+
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases:
+    -> show databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':
+show databases' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ipl_analysis_db    |
+| mydb               |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.03 sec)
+
+mysql> use mydb;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| employee       |
+| student        |
++----------------+
+2 rows in set (0.01 sec)
+
+mysql> create table student_table(ID int, Name varchar(20), Email varchar(50), Phone bigint, About varchar(255));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> describe student_table;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| ID    | int          | YES  |     | NULL    |       |
+| Name  | varchar(20)  | YES  |     | NULL    |       |
+| Email | varchar(50)  | YES  |     | NULL    |       |
+| Phone | bigint       | YES  |     | NULL    |       |
+| About | varchar(255) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> insert into student_table value(1, "Nasir", "nasir@gmail.com", 1637017926, "This is about Nasir");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> create table student_table1(ID int primary key auto_increment, Name varchar(20) unique, Email varchar(50) unique, Phone bigint, About varchar(255));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> alter table student_table modify column ID int primary key auto_increment+
+    -> alter table student_table modify column ID int primary key auto_increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+
+alter table student_table modify column ID int primary key auto_increment' at line 1
+mysql> alter table student_table modify column ID int primary key auto_increment;
+Query OK, 1 row affected (0.05 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> describe student_table;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| ID    | int          | NO   | PRI | NULL    | auto_increment |
+| Name  | varchar(20)  | YES  |     | NULL    |                |
+| Email | varchar(50)  | YES  |     | NULL    |                |
+| Phone | bigint       | YES  |     | NULL    |                |
+| About | varchar(255) | YES  |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> describe student_table1;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| ID    | int          | NO   | PRI | NULL    | auto_increment |
+| Name  | varchar(20)  | YES  | UNI | NULL    |                |
+| Email | varchar(50)  | YES  | UNI | NULL    |                |
+| Phone | bigint       | YES  |     | NULL    |                |
+| About | varchar(255) | YES  |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student_table value(1, "Nasir", "nasir@gmail.com", 1637017926, "This is about Nasir");
+ERROR 1062 (23000): Duplicate entry '1' for key 'student_table.PRIMARY'
+mysql> insert into student_table1 value(1, "Nasir", "nasir@gmail.com", 1637017926, "This is about Nasir");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student_table;
++----+-------+-----------------+------------+---------------------+
+| ID | Name  | Email           | Phone      | About               |
++----+-------+-----------------+------------+---------------------+
+|  1 | Nasir | nasir@gmail.com | 1637017926 | This is about Nasir |
++----+-------+-----------------+------------+---------------------+
+1 row in set (0.01 sec)
+
+mysql> select * from student_table1;
++----+-------+-----------------+------------+---------------------+
+| ID | Name  | Email           | Phone      | About               |
++----+-------+-----------------+------------+---------------------+
+|  1 | Nasir | nasir@gmail.com | 1637017926 | This is about Nasir |
++----+-------+-----------------+------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table student_table modify column Email varchar(50) unique not Null;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe student_table;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| ID    | int          | NO   | PRI | NULL    | auto_increment |
+| Name  | varchar(20)  | YES  |     | NULL    |                |
+| Email | varchar(50)  | NO   | UNI | NULL    |                |
+| Phone | bigint       | YES  |     | NULL    |                |
+| About | varchar(255) | YES  |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> describe student_table1;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| ID    | int          | NO   | PRI | NULL    | auto_increment |
+| Name  | varchar(20)  | YES  | UNI | NULL    |                |
+| Email | varchar(50)  | YES  | UNI | NULL    |                |
+| Phone | bigint       | YES  |     | NULL    |                |
+| About | varchar(255) | YES  |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> create table emp_table(Emp_ID int primary key auto_increment, EmpName varchar(100), DeptName varchar(10), Designation varchar(50), DOJ date, Salary float);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> describe emp_table;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| Emp_ID      | int          | NO   | PRI | NULL    | auto_increment |
+| EmpName     | varchar(100) | YES  |     | NULL    |                |
+| DeptName    | varchar(10)  | YES  |     | NULL    |                |
+| Designation | varchar(50)  | YES  |     | NULL    |                |
+| DOJ         | date         | YES  |     | NULL    |                |
+| Salary      | float        | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> create table Amp_table(Emp_ID int primary key auto_increment, EmpName varchar(100), DeptName varchar(10), Designation varchar(50), DOJ date, Salary float, primary key(Emp_ID));
+ERROR 1068 (42000): Multiple primary key defined
+mysql> create table Amp_table(Emp_ID int, EmpName varchar(100), DeptName varchar(10), Designation varchar(50), DOJ date, Salary float, primary key(Emp_ID));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> describe Amp_table;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| Emp_ID      | int          | NO   | PRI | NULL    |       |
+| EmpName     | varchar(100) | YES  |     | NULL    |       |
+| DeptName    | varchar(10)  | YES  |     | NULL    |       |
+| Designation | varchar(50)  | YES  |     | NULL    |       |
+| DOJ         | date         | YES  |     | NULL    |       |
+| Salary      | float        | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> drop table Amp_table;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| emp_table      |
+| employee       |
+| student        |
+| student_table  |
+| student_table1 |
++----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp_table;
+Empty set (0.00 sec)
+
+mysql> insert into emp_table value(1, "Colleen Hurst", "HQ", "Regional Director", "2009-09-15", 205500.00);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from emp_table;
++--------+---------------+----------+-------------------+------------+--------+
+| Emp_ID | EmpName       | DeptName | Designation       | DOJ        | Salary |
++--------+---------------+----------+-------------------+------------+--------+
+|      1 | Colleen Hurst | HQ       | Regional Director | 2009-09-15 | 205500 |
++--------+---------------+----------+-------------------+------------+--------+
+1 row in set (0.00 sec)
+
+mysql> insert into emp_table values("Breille Wialliamson", "Software", "Integration Specialist", "2012-12-02", 372000.00), ("Garrett Winters", "Software", "Accountant", "2011-07-25", 170750.00);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into emp_table values(2, "Breille Wialliamson", "Software", "Integration Specialist", "2012-12-02", 372000.00), (3,"Garrett Winters", "Software", "Accountant", "2011-07-25", 170750.00);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into emp_table values(4, "Caesar Vance", "Sales", "Sales Support", "2011-11-12", 106450.00), (5,"Sonya Frost", "Software", "Software Engineer", "2008-12-13", 133600.00);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp_table;
++--------+---------------------+----------+------------------------+------------+--------+
+| Emp_ID | EmpName             | DeptName | Designation            | DOJ        | Salary |
++--------+---------------------+----------+------------------------+------------+--------+
+|      1 | Colleen Hurst       | HQ       | Regional Director      | 2009-09-15 | 205500 |
+|      2 | Breille Wialliamson | Software | Integration Specialist | 2012-12-02 | 372000 |
+|      3 | Garrett Winters     | Software | Accountant             | 2011-07-25 | 170750 |
+|      4 | Caesar Vance        | Sales    | Sales Support          | 2011-11-12 | 106450 |
+|      5 | Sonya Frost         | Software | Software Engineer      | 2008-12-13 | 133600 |
++--------+---------------------+----------+------------------------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> insert into emp_table values(6, "Herrod Chandler", "Sales", "Sales Executive", "2012-08-06", 127500.00), (7,"Jena Gaines", "HQ", "Office Manager", "2008-12-19", 90560.00);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp_table;
++--------+---------------------+----------+------------------------+------------+--------+
+| Emp_ID | EmpName             | DeptName | Designation            | DOJ        | Salary |
++--------+---------------------+----------+------------------------+------------+--------+
+|      1 | Colleen Hurst       | HQ       | Regional Director      | 2009-09-15 | 205500 |
+|      2 | Breille Wialliamson | Software | Integration Specialist | 2012-12-02 | 372000 |
+|      3 | Garrett Winters     | Software | Accountant             | 2011-07-25 | 170750 |
+|      4 | Caesar Vance        | Sales    | Sales Support          | 2011-11-12 | 106450 |
+|      5 | Sonya Frost         | Software | Software Engineer      | 2008-12-13 | 133600 |
+|      6 | Herrod Chandler     | Sales    | Sales Executive        | 2012-08-06 | 127500 |
+|      7 | Jena Gaines         | HQ       | Office Manager         | 2008-12-19 |  90560 |
++--------+---------------------+----------+------------------------+------------+--------+
+7 rows in set (0.00 sec)
+
+mysql>
+
+19-05-2026
+
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> show databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'show databases' at line 2
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ipl_analysis_db    |
+| mydb               |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.04 sec)
+
+mysql> use mydb;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| emp_table      |
+| employees      |
+| student        |
+| student_table  |
+| student_table1 |
++----------------+
+5 rows in set (0.02 sec)
+
+mysql> select * from employees;
++--------+----------+---------------------+------------+---------+----------+
+| emp_id | emp_name | emp_mail            | emp_dob    | emp_age | city     |
++--------+----------+---------------------+------------+---------+----------+
+|      1 | Shreya   | shreya@gmail.com    | 1998-06-27 |      28 | Jaipur   |
+|      2 | Savi     | savi@hotmail.com    | 1995-06-01 |      30 | Paris    |
+|      3 | Nishika  | nishika@outlook.com | 1995-07-12 |      30 | Vadodara |
+|      4 | Devika   | devika@live.in      | 1995-03-03 |      30 | Bharuch  |
++--------+----------+---------------------+------------+---------+----------+
+4 rows in set (0.02 sec)
+
+mysql> describe employees;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| emp_id   | int          | YES  |     | NULL    |       |
+| emp_name | varchar(30)  | YES  |     | NULL    |       |
+| emp_mail | varchar(100) | YES  |     | NULL    |       |
+| emp_dob  | date         | YES  |     | NULL    |       |
+| emp_age  | int          | YES  |     | NULL    |       |
+| city     | char(20)     | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> insert into employees values(5, "Yesha", "yesha.yahoo.com", "1995-09-12", 30, "Mumbai"), (6, "Kavya", "kavya.gmail.com", "1995-07-12", 30, "Delhi");
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from employees;
++--------+----------+---------------------+------------+---------+----------+
+| emp_id | emp_name | emp_mail            | emp_dob    | emp_age | city     |
++--------+----------+---------------------+------------+---------+----------+
+|      1 | Shreya   | shreya@gmail.com    | 1998-06-27 |      28 | Jaipur   |
+|      2 | Savi     | savi@hotmail.com    | 1995-06-01 |      30 | Paris    |
+|      3 | Nishika  | nishika@outlook.com | 1995-07-12 |      30 | Vadodara |
+|      4 | Devika   | devika@live.in      | 1995-03-03 |      30 | Bharuch  |
+|      5 | Yesha    | yesha.yahoo.com     | 1995-09-12 |      30 | Mumbai   |
+|      6 | Kavya    | kavya.gmail.com     | 1995-07-12 |      30 | Delhi    |
++--------+----------+---------------------+------------+---------+----------+
+6 rows in set (0.00 sec)
+
+mysql> insert into employees values(7, "Anu", "anu@hotmail.com", "1998-10-10", 28, "Bengaluru"), (8, "Megha", "savi.gmail.com", "1995-07-01", 30, "Chennai");
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from employees;
++--------+----------+---------------------+------------+---------+-----------+
+| emp_id | emp_name | emp_mail            | emp_dob    | emp_age | city      |
++--------+----------+---------------------+------------+---------+-----------+
+|      1 | Shreya   | shreya@gmail.com    | 1998-06-27 |      28 | Jaipur    |
+|      2 | Savi     | savi@hotmail.com    | 1995-06-01 |      30 | Paris     |
+|      3 | Nishika  | nishika@outlook.com | 1995-07-12 |      30 | Vadodara  |
+|      4 | Devika   | devika@live.in      | 1995-03-03 |      30 | Bharuch   |
+|      5 | Yesha    | yesha.yahoo.com     | 1995-09-12 |      30 | Mumbai    |
+|      6 | Kavya    | kavya.gmail.com     | 1995-07-12 |      30 | Delhi     |
+|      7 | Anu      | anu@hotmail.com     | 1998-10-10 |      28 | Bengaluru |
+|      8 | Megha    | savi.gmail.com      | 1995-07-01 |      30 | Chennai   |
++--------+----------+---------------------+------------+---------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> alter table employees add constraint pk_employee primary key(emp_id);
+Query OK, 0 rows affected (0.20 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe employees;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| emp_id   | int          | NO   | PRI | NULL    |       |
+| emp_name | varchar(30)  | YES  |     | NULL    |       |
+| emp_mail | varchar(100) | YES  |     | NULL    |       |
+| emp_dob  | date         | YES  |     | NULL    |       |
+| emp_age  | int          | YES  |     | NULL    |       |
+| city     | char(20)     | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> alter table employees add constraint chk_age check(age >= 29);
+ERROR 1054 (42S22): Unknown column 'age' in 'check constraint chk_age expression'
+mysql> alter table employees add constraint chk_age check(emp_age >= 29);
+ERROR 3819 (HY000): Check constraint 'chk_age' is violated.
+mysql> alter table employees add constraint chk_emp_age check(emp_age >= 29);
+ERROR 3819 (HY000): Check constraint 'chk_emp_age' is violated.
+mysql> alter table employees add constraint chk_emp_age check(emp_age >= 29);
+ERROR 3819 (HY000): Check constraint 'chk_emp_age' is violated.
+mysql> describe employees;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| emp_id   | int          | NO   | PRI | NULL    |       |
+| emp_name | varchar(30)  | YES  |     | NULL    |       |
+| emp_mail | varchar(100) | YES  |     | NULL    |       |
+| emp_dob  | date         | YES  |     | NULL    |       |
+| emp_age  | int          | YES  |     | NULL    |       |
+| city     | char(20)     | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> alter table employees add constraint chk_age check(emp_age >= 25);
+Query OK, 8 rows affected (0.17 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> alter table employees add city set default 'New York';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'default 'New York'' at line 1
+mysql> alter table employees add city set default 'Mumbai';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'default 'Mumbai'' at line 1
+mysql> alter table employees add city set default 'Vadodara';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'default 'Vadodara'' at line 1
+mysql>
+
+20-05-2026
+
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ipl_analysis_db    |
+| mydb               |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.14 sec)
+
+mysql> use mydb
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| emp_table      |
+| employees      |
+| student        |
+| student_table  |
+| student_table1 |
++----------------+
+5 rows in set (0.03 sec)
+
+mysql> describe employees;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| emp_id   | int          | NO   | PRI | NULL    |       |
+| emp_name | varchar(30)  | YES  |     | NULL    |       |
+| emp_mail | varchar(100) | YES  |     | NULL    |       |
+| emp_dob  | date         | YES  |     | NULL    |       |
+| emp_age  | int          | YES  |     | NULL    |       |
+| city     | char(20)     | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+6 rows in set (0.03 sec)
+
+mysql> select * from employees;
++--------+----------+---------------------+------------+---------+-----------+
+| emp_id | emp_name | emp_mail            | emp_dob    | emp_age | city      |
++--------+----------+---------------------+------------+---------+-----------+
+|      1 | Shreya   | shreya@gmail.com    | 1998-06-27 |      28 | Jaipur    |
+|      2 | Savi     | savi@hotmail.com    | 1995-06-01 |      30 | Paris     |
+|      3 | Nishika  | nishika@outlook.com | 1995-07-12 |      30 | Vadodara  |
+|      4 | Devika   | devika@live.in      | 1995-03-03 |      30 | Bharuch   |
+|      5 | Yesha    | yesha.yahoo.com     | 1995-09-12 |      30 | Mumbai    |
+|      6 | Kavya    | kavya.gmail.com     | 1995-07-12 |      30 | Delhi     |
+|      7 | Anu      | anu@hotmail.com     | 1998-10-10 |      28 | Bengaluru |
+|      8 | Megha    | savi.gmail.com      | 1995-07-01 |      30 | Chennai   |
++--------+----------+---------------------+------------+---------+-----------+
+8 rows in set (0.29 sec)
+
+mysql> describe employees;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| emp_id   | int          | NO   | PRI | NULL    |       |
+| emp_name | varchar(30)  | YES  |     | NULL    |       |
+| emp_mail | varchar(100) | YES  |     | NULL    |       |
+| emp_dob  | date         | YES  |     | NULL    |       |
+| emp_age  | int          | YES  |     | NULL    |       |
+| city     | char(20)     | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+6 rows in set (0.07 sec)
+
+mysql> describe emp_table;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| Emp_ID      | int          | NO   | PRI | NULL    | auto_increment |
+| EmpName     | varchar(100) | YES  |     | NULL    |                |
+| DeptName    | varchar(10)  | YES  |     | NULL    |                |
+| Designation | varchar(50)  | YES  |     | NULL    |                |
+| DOJ         | date         | YES  |     | NULL    |                |
+| Salary      | float        | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.02 sec)
+
+mysql> create table comb_emp(Emp_ID int, emp_id int, comb_name varchar(50), Salary float(8,2), foriegn key(Emp_ID) references emp_table(Emp_ID), foriegn key(emp_id) references employees(emp_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(Emp_ID) references emp_table(Emp_ID), foriegn key(emp_id) references employe' at line 1
+mysql> create table comb_emp(Emp_ID int, emp_id int, comb_name varchar(50), Salary float(8,2), foriegn key(Emp_ID) references emp_table(Emp_ID), foreign key(emp_id) references employees(emp_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(Emp_ID) references emp_table(Emp_ID), foreign key(emp_id) references employe' at line 1
+mysql> create table comb_emp(Emp_ID int, emp_id int, comb_name varchar(50), Salary float(8,2), foreign key(Emp_ID) references emp_table(Emp_ID), foreign key(emp_id) references employees(emp_id));
+ERROR 1060 (42S21): Duplicate column name 'emp_id'
+mysql> alter table emp_table rename column Emp_ID to emp_id1;
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe emp_table;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| emp_id1     | int          | NO   | PRI | NULL    | auto_increment |
+| EmpName     | varchar(100) | YES  |     | NULL    |                |
+| DeptName    | varchar(10)  | YES  |     | NULL    |                |
+| Designation | varchar(50)  | YES  |     | NULL    |                |
+| DOJ         | date         | YES  |     | NULL    |                |
+| Salary      | float        | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.04 sec)
+
+mysql> create table comb_emp(Emp_ID int, emp_id int, comb_name varchar(50), Salary float(8,2), foreign key(emp_id1) references emp_table(emp_id1), foreign key(emp_id) references employees(emp_id));
+ERROR 1060 (42S21): Duplicate column name 'emp_id'
+mysql> alter table emp_table rename column Emp_ID to amp_id;
+ERROR 1054 (42S22): Unknown column 'Emp_ID' in 'emp_table'
+mysql> alter table emp_table rename column Emp_ID1 to amp_id;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe emp_table;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| amp_id      | int          | NO   | PRI | NULL    | auto_increment |
+| EmpName     | varchar(100) | YES  |     | NULL    |                |
+| DeptName    | varchar(10)  | YES  |     | NULL    |                |
+| Designation | varchar(50)  | YES  |     | NULL    |                |
+| DOJ         | date         | YES  |     | NULL    |                |
+| Salary      | float        | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.01 sec)
+
+mysql> create table comb_emp(amp_id int, emp_id int, comb_name varchar(50), Salary float(8,2), foreign key(amp_id) references emp_table(amp_id), foreign key(emp_id) references employees(emp_id));
+Query OK, 0 rows affected, 1 warning (0.13 sec)
+
+mysql> describe comb_emp;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| amp_id    | int         | YES  | MUL | NULL    |       |
+| emp_id    | int         | YES  | MUL | NULL    |       |
+| comb_name | varchar(50) | YES  |     | NULL    |       |
+| Salary    | float(8,2)  | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table comb_name drop column amp_id;
+ERROR 1146 (42S02): Table 'mydb.comb_name' doesn't exist
+mysql> alter table comb_emp drop column amp_id;
+ERROR 1828 (HY000): Cannot drop column 'amp_id': needed in a foreign key constraint 'comb_emp_ibfk_1'
+mysql> alter table comb_emp drop column amp_id, drop foreign key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table comb_emp drop column amp_id, drop foreign key comb_emp_ibfk_1;
+Query OK, 0 rows affected (0.18 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table comb_emp drop column emp_id, drop foreign key comb_emp_ibfk_1;
+ERROR 1828 (HY000): Cannot drop column 'emp_id': needed in a foreign key constraint 'comb_emp_ibfk_2'
+mysql> alter table comb_emp drop column emp_id, drop foreign key comb_emp_ibfk_2;
+Query OK, 0 rows affected (0.14 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe comb_emp;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| comb_name | varchar(50) | YES  |     | NULL    |       |
+| Salary    | float(8,2)  | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> select max(emp_age) from employees;
++--------------+
+| max(emp_age) |
++--------------+
+|           30 |
++--------------+
+1 row in set (0.02 sec)
+
+mysql> select min(emp_dob) from employees;
++--------------+
+| min(emp_dob) |
++--------------+
+| 1995-03-03   |
++--------------+
+1 row in set (0.03 sec)
+
+mysql> select min(city) from employees;
++-----------+
+| min(city) |
++-----------+
+| Bengaluru |
++-----------+
+1 row in set (0.04 sec)
+
+mysql> select sum(city) from employees;
++-----------+
+| sum(city) |
++-----------+
+|         0 |
++-----------+
+1 row in set, 8 warnings (0.04 sec)
+
+mysql> select sum(emp_id) from employees;
++-------------+
+| sum(emp_id) |
++-------------+
+|          36 |
++-------------+
+1 row in set (0.03 sec)
+
+mysql> select avg(emp_age) from employees;
++--------------+
+| avg(emp_age) |
++--------------+
+|      29.5000 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select std(emp_age) from employees;
++--------------------+
+| std(emp_age)       |
++--------------------+
+| 0.8660254037844389 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+21-05-2026
+
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ipl_analysis_db    |
+| mydb               |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.04 sec)
+
+mysql> use mydb;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| comb_emp       |
+| emp_table      |
+| employees      |
+| student        |
+| student_table  |
+| student_table1 |
++----------------+
+6 rows in set (0.02 sec)
+
+mysql> select * from student;
++--------+------+----------------+---------------------+---------+
+| name   | id   | email          | dob                 | salary  |
++--------+------+----------------+---------------------+---------+
+| Hardik |  101 | hard@gmail.com | 1995-01-07 00:00:00 | 52000.6 |
++--------+------+----------------+---------------------+---------+
+1 row in set (0.05 sec)
+
+mysql> select * from student_table;
++----+-------+-----------------+------------+---------------------+
+| ID | Name  | Email           | Phone      | About               |
++----+-------+-----------------+------------+---------------------+
+|  1 | Nasir | nasir@gmail.com | 1637017926 | This is about Nasir |
++----+-------+-----------------+------------+---------------------+
+1 row in set (0.01 sec)
+
+mysql> select * from student_table1;
++----+-------+-----------------+------------+---------------------+
+| ID | Name  | Email           | Phone      | About               |
++----+-------+-----------------+------------+---------------------+
+|  1 | Nasir | nasir@gmail.com | 1637017926 | This is about Nasir |
++----+-------+-----------------+------------+---------------------+
+1 row in set (0.01 sec)
+
+mysql> insert into student values ("Shreya", 102, "shreya@hotmail.com", "1995-06-27 11:09:30", 80000.5), ("Steelras", 103, "steelras@outlook.com", "1995-01-30 15:50:50", 32000.85);
+Query OK, 2 rows affected (0.07 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++----------+------+----------------------+---------------------+---------+
+| name     | id   | email                | dob                 | salary  |
++----------+------+----------------------+---------------------+---------+
+| Hardik   |  101 | hard@gmail.com       | 1995-01-07 00:00:00 | 52000.6 |
+| Shreya   |  102 | shreya@hotmail.com   | 1995-06-27 11:09:30 | 80000.5 |
+| Steelras |  103 | steelras@outlook.com | 1995-01-30 15:50:50 | 32000.8 |
++----------+------+----------------------+---------------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into student values ("Anu", 104, "gmail@hotmail.com", "1995-10-10 07:45:45", 90000.5), ("Yesha", 105, "yesha@gmail.com", "1995-07-12 12:52:50", 52000.85);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++----------+------+----------------------+---------------------+---------+
+| name     | id   | email                | dob                 | salary  |
++----------+------+----------------------+---------------------+---------+
+| Hardik   |  101 | hard@gmail.com       | 1995-01-07 00:00:00 | 52000.6 |
+| Shreya   |  102 | shreya@hotmail.com   | 1995-06-27 11:09:30 | 80000.5 |
+| Steelras |  103 | steelras@outlook.com | 1995-01-30 15:50:50 | 32000.8 |
+| Anu      |  104 | gmail@hotmail.com    | 1995-10-10 07:45:45 | 90000.5 |
+| Yesha    |  105 | yesha@gmail.com      | 1995-07-12 12:52:50 | 52000.9 |
++----------+------+----------------------+---------------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student values ("Laprix", 106, "laprix@hotmail.com", "1995-06-27 11:09:10", 80000.5), ("Devika", 107, "devika@outlook.com", "1995-01-03 10:50:50", 72000.85);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++----------+------+----------------------+---------------------+---------+
+| name     | id   | email                | dob                 | salary  |
++----------+------+----------------------+---------------------+---------+
+| Hardik   |  101 | hard@gmail.com       | 1995-01-07 00:00:00 | 52000.6 |
+| Shreya   |  102 | shreya@hotmail.com   | 1995-06-27 11:09:30 | 80000.5 |
+| Steelras |  103 | steelras@outlook.com | 1995-01-30 15:50:50 | 32000.8 |
+| Anu      |  104 | gmail@hotmail.com    | 1995-10-10 07:45:45 | 90000.5 |
+| Yesha    |  105 | yesha@gmail.com      | 1995-07-12 12:52:50 | 52000.9 |
+| Laprix   |  106 | laprix@hotmail.com   | 1995-06-27 11:09:10 | 80000.5 |
+| Devika   |  107 | devika@outlook.com   | 1995-01-03 10:50:50 | 72000.9 |
++----------+------+----------------------+---------------------+---------+
+7 rows in set (0.00 sec)
+
+mysql> insert into student values ("Nishika", 108, "nishika@live.in", "1995-08-15 00:45:45", 60000.5), ("Kavya", 109, "kavya@gmail.com", "1995-07-12 12:52:50", 52000.85);
+Query OK, 2 rows affected (0.05 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++----------+------+----------------------+---------------------+---------+
+| name     | id   | email                | dob                 | salary  |
++----------+------+----------------------+---------------------+---------+
+| Hardik   |  101 | hard@gmail.com       | 1995-01-07 00:00:00 | 52000.6 |
+| Shreya   |  102 | shreya@hotmail.com   | 1995-06-27 11:09:30 | 80000.5 |
+| Steelras |  103 | steelras@outlook.com | 1995-01-30 15:50:50 | 32000.8 |
+| Anu      |  104 | gmail@hotmail.com    | 1995-10-10 07:45:45 | 90000.5 |
+| Yesha    |  105 | yesha@gmail.com      | 1995-07-12 12:52:50 | 52000.9 |
+| Laprix   |  106 | laprix@hotmail.com   | 1995-06-27 11:09:10 | 80000.5 |
+| Devika   |  107 | devika@outlook.com   | 1995-01-03 10:50:50 | 72000.9 |
+| Nishika  |  108 | nishika@live.in      | 1995-08-15 00:45:45 | 60000.5 |
+| Kavya    |  109 | kavya@gmail.com      | 1995-07-12 12:52:50 | 52000.9 |
++----------+------+----------------------+---------------------+---------+
+9 rows in set (0.00 sec)
+
+mysql> create table subject(sub_id int primary key auto_increment, sub_name varchar(100), Sub_Weight int);
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> select * from subject;
+Empty set (0.00 sec)
+
+mysql> describe subject;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| sub_id     | int          | NO   | PRI | NULL    | auto_increment |
+| sub_name   | varchar(100) | YES  |     | NULL    |                |
+| Sub_Weight | int          | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.02 sec)
+
+mysql> insert into subject values("Statistics", 50 ), ("Python", 50 ), ("SQL", 50 ), ("Advanced Excel", 50 );
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into subject values(1, "Statistics", 50 ), (2, "Python", 50 ), (3, "SQL", 50 ), (4, "Advanced Excel", 50 );
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from subject;
++--------+----------------+------------+
+| sub_id | sub_name       | Sub_Weight |
++--------+----------------+------------+
+|      1 | Statistics     |         50 |
+|      2 | Python         |         50 |
+|      3 | SQL            |         50 |
+|      4 | Advanced Excel |         50 |
++--------+----------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into subject values(5, "Pandas", 25 ), (6, "Matplotlib", 25), (7, "Project", 25), (8, "Mock Interview", 25);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from subject;
++--------+----------------+------------+
+| sub_id | sub_name       | Sub_Weight |
++--------+----------------+------------+
+|      1 | Statistics     |         50 |
+|      2 | Python         |         50 |
+|      3 | SQL            |         50 |
+|      4 | Advanced Excel |         50 |
+|      5 | Pandas         |         25 |
+|      6 | Matplotlib     |         25 |
+|      7 | Project        |         25 |
+|      8 | Mock Interview |         25 |
++--------+----------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> alter table student modify column name primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key' at line 1
+mysql> alter table student modify column name varchar(50) primary key;
+Query OK, 0 rows affected (0.24 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe student;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| name   | varchar(50)  | NO   | PRI | NULL    |       |
+| id     | int          | YES  |     | NULL    |       |
+| email  | varchar(100) | YES  |     | NULL    |       |
+| dob    | datetime     | YES  |     | NULL    |       |
+| salary | float        | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+5 rows in set (0.04 sec)
+
+mysql> alter table student modify column id int primary key;
+ERROR 1068 (42000): Multiple primary key defined
+mysql> create table marks(marks int primary key, name varchar(50), sub_id int), foreign key(name) references student(name), foreign key(sub_id) references subject(sub_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', foreign key(name) references student(name), foreign key(sub_id) references sub' at line 1
+mysql> create table marks(marks int primary key, name varchar(50), sub_id int), foreign key(name) references student(name), foreign key(sub_id) references subject(sub_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', foreign key(name) references student(name), foreign key(sub_id) references sub' at line 1
+mysql> create table marks(marks int primary key, name varchar(50), sub_id int), foreign key(name) references student(name);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', foreign key(name) references student(name)' at line 1
+mysql> create table marks(marks int primary key, name varchar(50), sub_id int, foreign key(name) references student(name), foreign key(name) references student(name));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> describe marks;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| marks  | int         | NO   | PRI | NULL    |       |
+| name   | varchar(50) | YES  | MUL | NULL    |       |
+| sub_id | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> drop table marks;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table marks(marks int primary key, name varchar(50), sub_id int, foreign key(name) references student(name), foreign key(sub_id) references subject(sub_id));
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> describe marks;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| marks  | int         | NO   | PRI | NULL    |       |
+| name   | varchar(50) | YES  | MUL | NULL    |       |
+| sub_id | int         | YES  | MUL | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into marks values(40), (38), (35), (45), (20), (24), (25);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into marks values(40, "Hardik", 1), (38, "Hardik", 2), (45, "Hardik", 3), (38, "Hardik", 4), (20, "Hardik", 5), (25, "Hardik", 6), (22, "Hardik", 7), (23, "Hardik", 8);
+ERROR 1062 (23000): Duplicate entry '38' for key 'marks.PRIMARY'
+mysql> insert into marks values(40, "Hardik", 1), (38, "Hardik", 2), (45, "Hardik", 3), (41, "Hardik", 4), (20, "Hardik", 5), (25, "Hardik", 6), (22, "Hardik", 7), (23, "Hardik", 8);
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from marks;
++-------+--------+--------+
+| marks | name   | sub_id |
++-------+--------+--------+
+|    20 | Hardik |      5 |
+|    22 | Hardik |      7 |
+|    23 | Hardik |      8 |
+|    25 | Hardik |      6 |
+|    38 | Hardik |      2 |
+|    40 | Hardik |      1 |
+|    41 | Hardik |      4 |
+|    45 | Hardik |      3 |
++-------+--------+--------+
+8 rows in set (0.00 sec)
+
+mysql> alter table marks drop primary key;
+Query OK, 8 rows affected (0.19 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> describe marks;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| marks  | int         | NO   |     | NULL    |       |
+| name   | varchar(50) | YES  | MUL | NULL    |       |
+| sub_id | int         | YES  | MUL | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into marks values(49, "Shreya", 1), (48, "^Shreya", 2), (45, "Shreya", 3), (38, "Shreya", 4), (25, "Shreya", 5), (24, "Shreya", 6), (18, "Shreya", 7), (21, "Shreya", 8);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`mydb`.`marks`, CONSTRAINT `marks_ibfk_1` FOREIGN KEY (`name`) REFERENCES `student` (`name`))
+mysql> insert into marks values(49, "Shreya", 1), (48, "Shreya", 2), (45, "Shreya", 3), (38, "Shreya", 4), (25, "Shreya", 5), (24, "Shreya", 6), (18, "Shreya", 7), (21, "Shreya", 8);
+Query OK, 8 rows affected (0.04 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from marks;
++-------+--------+--------+
+| marks | name   | sub_id |
++-------+--------+--------+
+|    20 | Hardik |      5 |
+|    22 | Hardik |      7 |
+|    23 | Hardik |      8 |
+|    25 | Hardik |      6 |
+|    38 | Hardik |      2 |
+|    40 | Hardik |      1 |
+|    41 | Hardik |      4 |
+|    45 | Hardik |      3 |
+|    49 | Shreya |      1 |
+|    48 | Shreya |      2 |
+|    45 | Shreya |      3 |
+|    38 | Shreya |      4 |
+|    25 | Shreya |      5 |
+|    24 | Shreya |      6 |
+|    18 | Shreya |      7 |
+|    21 | Shreya |      8 |
++-------+--------+--------+
+16 rows in set (0.00 sec)
+
+mysql>
+
+22-05-2026
+
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ipl_analysis_db    |
+| mydb               |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.03 sec)
+
+mysql> use mydb;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| comb_emp       |
+| emp_table      |
+| employees      |
+| marks          |
+| student        |
+| student_table  |
+| student_table1 |
+| subject        |
++----------------+
+8 rows in set (0.02 sec)
+
+mysql> select * from student:
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':' at line 1
+mysql> select * from student;
++----------+------+----------------------+---------------------+---------+
+| name     | id   | email                | dob                 | salary  |
++----------+------+----------------------+---------------------+---------+
+| Anu      |  104 | gmail@hotmail.com    | 1995-10-10 07:45:45 | 90000.5 |
+| Devika   |  107 | devika@outlook.com   | 1995-01-03 10:50:50 | 72000.9 |
+| Hardik   |  101 | hard@gmail.com       | 1995-01-07 00:00:00 | 52000.6 |
+| Kavya    |  109 | kavya@gmail.com      | 1995-07-12 12:52:50 | 52000.9 |
+| Laprix   |  106 | laprix@hotmail.com   | 1995-06-27 11:09:10 | 80000.5 |
+| Nishika  |  108 | nishika@live.in      | 1995-08-15 00:45:45 | 60000.5 |
+| Shreya   |  102 | shreya@hotmail.com   | 1995-06-27 11:09:30 | 80000.5 |
+| Steelras |  103 | steelras@outlook.com | 1995-01-30 15:50:50 | 32000.8 |
+| Yesha    |  105 | yesha@gmail.com      | 1995-07-12 12:52:50 | 52000.9 |
++----------+------+----------------------+---------------------+---------+
+9 rows in set (0.09 sec)
+
+mysql> select * from subject;
++--------+----------------+------------+
+| sub_id | sub_name       | Sub_Weight |
++--------+----------------+------------+
+|      1 | Statistics     |         50 |
+|      2 | Python         |         50 |
+|      3 | SQL            |         50 |
+|      4 | Advanced Excel |         50 |
+|      5 | Pandas         |         25 |
+|      6 | Matplotlib     |         25 |
+|      7 | Project        |         25 |
+|      8 | Mock Interview |         25 |
++--------+----------------+------------+
+8 rows in set (0.01 sec)
+
+mysql> select * from marks;
++-------+--------+--------+
+| marks | name   | sub_id |
++-------+--------+--------+
+|    20 | Hardik |      5 |
+|    22 | Hardik |      7 |
+|    23 | Hardik |      8 |
+|    25 | Hardik |      6 |
+|    38 | Hardik |      2 |
+|    40 | Hardik |      1 |
+|    41 | Hardik |      4 |
+|    45 | Hardik |      3 |
+|    49 | Shreya |      1 |
+|    48 | Shreya |      2 |
+|    45 | Shreya |      3 |
+|    38 | Shreya |      4 |
+|    25 | Shreya |      5 |
+|    24 | Shreya |      6 |
+|    18 | Shreya |      7 |
+|    21 | Shreya |      8 |
++-------+--------+--------+
+16 rows in set (0.01 sec)
+
+mysql> create table prod(prod_id int primary key, prod_name varchar(50), brand_name varchar(100));
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> select * from prod;
+Empty set (0.01 sec)
+
+mysql> create table city(city_id int, city_name varchar(50) primary key, pincode bigint);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create table prod_anal(prod_id int, dept-stall varchar(100), city_name varchar(50), price bigint);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-stall varchar(100), city_name varchar(50), price bigint)' at line 1
+mysql> create table prod_anal(prod_id int, dept_stall varchar(100), city_name varchar(50), price bigint);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into prod(prod_id int, prod_name varchar(50), brand_name varchar(50)) values
+    -> (101, "ANDROID Phone", "Motorola" ),
+    -> (102, "Laptop", "HP" ),
+    -> (103, "Earbuds", "Logitech" ),
+    -> (104, "Pens", "Linc" ),
+    -> (104, "Pencil", "Apsara" ),
+    -> (105, "TV", "LG" );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int, prod_name varchar(50), brand_name varchar(50)) values
+(101, "ANDROID Phone"' at line 1
+mysql> insert into prod(prod_id int, prod_name varchar(50), brand_name varchar(50)) values
+    -> (101, "Android Phone", "Motorola" ),
+    -> (102, "Laptop", "HP" ),
+    -> (103, "Earbuds", "Logitech" ),
+    -> (104, "Pens", "Linc" ),
+    -> (105, "Pencil", "Apsara" ),
+    -> (106, "TV", "LG" );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int, prod_name varchar(50), brand_name varchar(50)) values
+(101, "Android Phone"' at line 1
+mysql> insert into prod(prod_id int, prod_name varchar(100), brand_name varchar(100)) values
+    -> (101, "Android Phone", "Motorola" ),
+    -> (102, "Laptop", "HP" ),
+    -> (103, "Earbuds", "Logitech" ),
+    -> (104, "Pens", "Linc" ),
+    -> (105, "Pencil", "Apsara" ),
+    -> (106, "TV", "LG" );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int, prod_name varchar(100), brand_name varchar(100)) values
+(101, "Android Phon' at line 1
+mysql> describe prod;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| prod_id    | int          | NO   | PRI | NULL    |       |
+| prod_name  | varchar(50)  | YES  |     | NULL    |       |
+| brand_name | varchar(100) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+3 rows in set (0.03 sec)
+
+mysql> insert into prod(prod_id, prod_name varchar, brand_name) values
+    -> (101, "Android Phone", "Motorola" ),
+    -> (102, "Laptop", "HP" ),
+    -> (103, "Earbuds", "Logitech" ),
+    -> (104, "Pens", "Linc" ),
+    -> (105, "Pencil", "Apsara" ),
+    -> (106, "TV", "LG" );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar, brand_name) values
+(101, "Android Phone", "Motorola" ),
+(102, "Laptop",' at line 1
+mysql> insert into prod(prod_id, prod_name, brand_name) values
+    -> (101, "Android Phone", "Motorola" ),
+    -> (102, "Laptop", "HP" ),
+    -> (103, "Earbuds", "Logitech" ),
+    -> (104, "Pens", "Linc" ),
+    -> (105, "Pencil", "Apsara" ),
+    -> (106, "TV", "LG" );
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from prod;
++---------+---------------+------------+
+| prod_id | prod_name     | brand_name |
++---------+---------------+------------+
+|     101 | Android Phone | Motorola   |
+|     102 | Laptop        | HP         |
+|     103 | Earbuds       | Logitech   |
+|     104 | Pens          | Linc       |
+|     105 | Pencil        | Apsara     |
+|     106 | TV            | LG         |
++---------+---------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> describe city:
+    -> describe city;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':
+describe city' at line 1
+mysql> describe city;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| city_id   | int         | YES  |     | NULL    |       |
+| city_name | varchar(50) | NO   | PRI | NULL    |       |
+| pincode   | bigint      | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into city(city_id, city_name, pincode) values
+    -> (001, "Delhi", 00000),
+    -> (002, "Jaipur", 10000),
+    -> (003, "Ahmedabad", 20000),
+    -> (004, "Lucknow", 30000),
+    -> (005, "Chennai", 40000),
+    -> (006, "Bengaluru", 50000),
+    -> (007, "Hyderabad", 60000),
+    -> (008, "Kolkata", 70000),
+    -> (009, "Mumbai", 80000),
+    -> (010, "Mohali", 90000);
+Query OK, 10 rows affected (0.02 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from city;
++---------+-----------+---------+
+| city_id | city_name | pincode |
++---------+-----------+---------+
+|       3 | Ahmedabad |   20000 |
+|       6 | Bengaluru |   50000 |
+|       5 | Chennai   |   40000 |
+|       1 | Delhi     |       0 |
+|       7 | Hyderabad |   60000 |
+|       2 | Jaipur    |   10000 |
+|       8 | Kolkata   |   70000 |
+|       4 | Lucknow   |   30000 |
+|      10 | Mohali    |   90000 |
+|       9 | Mumbai    |   80000 |
++---------+-----------+---------+
+10 rows in set (0.00 sec)
+
+mysql>
+
+25-05-2026
+
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ipl_analysis_db    |
+| mydb               |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.03 sec)
+
+mysql> use mydb;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| city           |
+| comb_emp       |
+| departments    |
+| emp_table      |
+| employees      |
+| employees1     |
+| marks          |
+| prod           |
+| prod_store     |
+| student        |
+| student_table  |
+| student_table1 |
+| subject        |
++----------------+
+13 rows in set (0.04 sec)
+
+mysql> create table org_team(emp_id int primary key, emp_name varchar(50), department varchar(56), salary float, manager_id int, city varchar(50));
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> describe org_team;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| emp_id     | int         | NO   | PRI | NULL    |       |
+| emp_name   | varchar(50) | YES  |     | NULL    |       |
+| department | varchar(56) | YES  |     | NULL    |       |
+| salary     | float       | YES  |     | NULL    |       |
+| manager_id | int         | YES  |     | NULL    |       |
+| city       | varchar(50) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> insert into org_team(emp_int, emp_name, department, salary, manager_id, city) values
+    -> (101, "Arvind Sharma", "Executive", 250000, Null, "Mumbai");
+ERROR 1054 (42S22): Unknown column 'emp_int' in 'field list'
+mysql> insert into org_team(emp_id, emp_name, department, salary, manager_id, city) values
+    -> (101, "Arvind Sharma", "Executive", 250000, Null, "Mumbai");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from org_team;
++--------+---------------+------------+--------+------------+--------+
+| emp_id | emp_name      | department | salary | manager_id | city   |
++--------+---------------+------------+--------+------------+--------+
+|    101 | Arvind Sharma | Executive  | 250000 |       NULL | Mumbai |
++--------+---------------+------------+--------+------------+--------+
+1 row in set (0.00 sec)
+
+mysql> insert into org_team(emp_id, emp_name, department, salary, manager_id, city) values
+    -> (102, "Priya Patel", "IT", 120000, 101, "Ahemadabad"),
+    -> (103, "Rajesh Khanna", "Finance", 100000, 101, "Bengaluru"),
+    -> (104, "Sunita Rao", "Logistics", 200000, 101, "Delhi"),
+    -> (105, "Amita Mishra", "Software", 250000, 101, "Jaipur"),
+    -> (106, "Deepika Padukone", "Marketing", 90000, 102, "Hyderabad"),
+    -> (107, "Vijay Mallya", "HR", 80000, 103, "Kolkata"),
+    -> (107, "Vijay Mallya", "HR", 950000, 107, "Paris"),
+    -> (108, "Ananya Pandey", "Manufacturing", 95000, 104, "New York"),
+    -> (109, "Rahul Dravid", "Advertising", 105000, 102, "Lucknow"),
+    -> (110, "Sanjay Dutt", "Finance", 110000, 105, "Pune");
+ERROR 1062 (23000): Duplicate entry '107' for key 'org_team.PRIMARY'
+mysql> insert into org_team(emp_id, emp_name, department, salary, manager_id, city) values
+    -> (102, "Priya Patel", "IT", 120000, 101, "Ahemadabad"),
+    -> (103, "Rajesh Khanna", "Finance", 100000, 101, "Bengaluru"),
+    -> (104, "Sunita Rao", "Logistics", 200000, 101, "Delhi"),
+    -> (105, "Amita Mishra", "Software", 250000, 101, "Jaipur"),
+    -> (106, "Deepika Padukone", "Marketing", 90000, 102, "Hyderabad"),
+    -> (107, "Vijay Mallya", "HR", 80000, 103, "Kolkata"),
+    -> (108, "Ananya Pandey", "Manufacturing", 95000, 104, "New York"),
+    -> (109, "Rahul Dravid", "Advertising", 105000, 102, "Lucknow"),
+    -> (110, "Sanjay Dutt", "Finance", 110000, 105, "Pune");
+Query OK, 9 rows affected (0.01 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select * from org_team;
++--------+------------------+---------------+--------+------------+------------+
+| emp_id | emp_name         | department    | salary | manager_id | city       |
++--------+------------------+---------------+--------+------------+------------+
+|    101 | Arvind Sharma    | Executive     | 250000 |       NULL | Mumbai     |
+|    102 | Priya Patel      | IT            | 120000 |        101 | Ahemadabad |
+|    103 | Rajesh Khanna    | Finance       | 100000 |        101 | Bengaluru  |
+|    104 | Sunita Rao       | Logistics     | 200000 |        101 | Delhi      |
+|    105 | Amita Mishra     | Software      | 250000 |        101 | Jaipur     |
+|    106 | Deepika Padukone | Marketing     |  90000 |        102 | Hyderabad  |
+|    107 | Vijay Mallya     | HR            |  80000 |        103 | Kolkata    |
+|    108 | Ananya Pandey    | Manufacturing |  95000 |        104 | New York   |
+|    109 | Rahul Dravid     | Advertising   | 105000 |        102 | Lucknow    |
+|    110 | Sanjay Dutt      | Finance       | 110000 |        105 | Pune       |
++--------+------------------+---------------+--------+------------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select t.emp_name as 'Manager Name', count(o.emp_id) as team_size from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having team_size > 2;
++---------------+-----------+
+| Manager Name  | team_size |
++---------------+-----------+
+| Arvind Sharma |         4 |
++---------------+-----------+
+1 row in set (0.01 sec)
+
+mysql> select t.emp_name as 'Manager Name', count(o.emp_id) as team_size from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having team_size >= 2;
++---------------+-----------+
+| Manager Name  | team_size |
++---------------+-----------+
+| Arvind Sharma |         4 |
+| Priya Patel   |         2 |
++---------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select t.emp_name as 'Manager Name', count(o.emp_id) as team_size from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having team_size <> 2;
++---------------+-----------+
+| Manager Name  | team_size |
++---------------+-----------+
+| Arvind Sharma |         4 |
+| Rajesh Khanna |         1 |
+| Sunita Rao    |         1 |
+| Amita Mishra  |         1 |
++---------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select t.emp_name as 'Manager Name', count(o.emp_id) as team_size from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having team_size > 0;
++---------------+-----------+
+| Manager Name  | team_size |
++---------------+-----------+
+| Arvind Sharma |         4 |
+| Priya Patel   |         2 |
+| Rajesh Khanna |         1 |
+| Sunita Rao    |         1 |
+| Amita Mishra  |         1 |
++---------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql>  
+
+26-05-2026
+
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ipl_analysis_db    |
+| mydb               |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.04 sec)
+
+mysql> use mydb;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| city           |
+| comb_emp       |
+| departments    |
+| emp_table      |
+| employees      |
+| employees1     |
+| marks          |
+| org_team       |
+| prod           |
+| prod_store     |
+| student        |
+| student_table  |
+| student_table1 |
+| subject        |
++----------------+
+14 rows in set (0.03 sec)
+
+mysql> describe org_team;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| emp_id     | int         | NO   | PRI | NULL    |       |
+| emp_name   | varchar(50) | YES  |     | NULL    |       |
+| department | varchar(56) | YES  |     | NULL    |       |
+| salary     | float       | YES  |     | NULL    |       |
+| manager_id | int         | YES  |     | NULL    |       |
+| city       | varchar(50) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> select * from org_team;
++--------+------------------+---------------+--------+------------+------------+
+| emp_id | emp_name         | department    | salary | manager_id | city       |
++--------+------------------+---------------+--------+------------+------------+
+|    101 | Arvind Sharma    | Executive     | 250000 |       NULL | Mumbai     |
+|    102 | Priya Patel      | IT            | 120000 |        101 | Ahemadabad |
+|    103 | Rajesh Khanna    | Finance       | 100000 |        101 | Bengaluru  |
+|    104 | Sunita Rao       | Logistics     | 200000 |        101 | Delhi      |
+|    105 | Amita Mishra     | Software      | 250000 |        101 | Jaipur     |
+|    106 | Deepika Padukone | Marketing     |  90000 |        102 | Hyderabad  |
+|    107 | Vijay Mallya     | HR            |  80000 |        103 | Kolkata    |
+|    108 | Ananya Pandey    | Manufacturing |  95000 |        104 | New York   |
+|    109 | Rahul Dravid     | Advertising   | 105000 |        102 | Lucknow    |
+|    110 | Sanjay Dutt      | Finance       | 110000 |        105 | Pune       |
++--------+------------------+---------------+--------+------------+------------+
+10 rows in set (0.07 sec)
+
+mysql> select t.manager_name as 'Manager Name', sum(o.salary) as team_salary from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.manager_id having team_salary > 200000;
+ERROR 1054 (42S22): Unknown column 't.manager_name' in 'field list'
+mysql> select t.emp_name as 'Manager Name', sum(o.salary) as team_salary from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.manager_id having team_salary > 200000;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'mydb.t.emp_name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select t.emp_name as 'Manager Name', count(o.emp_id) as team_size from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having team_size > 0;
++---------------+-----------+
+| Manager Name  | team_size |
++---------------+-----------+
+| Arvind Sharma |         4 |
+| Priya Patel   |         2 |
+| Rajesh Khanna |         1 |
+| Sunita Rao    |         1 |
+| Amita Mishra  |         1 |
++---------------+-----------+
+5 rows in set (0.04 sec)
+
+mysql> select t.emp_name as 'Manager Name', count(o.emp_id) as team_size, sum(o.salary) as team_salary from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having team_size > 0;
++---------------+-----------+-------------+
+| Manager Name  | team_size | team_salary |
++---------------+-----------+-------------+
+| Arvind Sharma |         4 |      670000 |
+| Priya Patel   |         2 |      195000 |
+| Rajesh Khanna |         1 |       80000 |
+| Sunita Rao    |         1 |       95000 |
+| Amita Mishra  |         1 |      110000 |
++---------------+-----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select t.emp_name as 'Manager Name', count(o.emp_id) as team_size, sum(o.salary) as team_salary, count(team_salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having team_size > 0, team_salary >= 200000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', team_salary >= 200000' at line 1
+mysql> select t.emp_name as 'Manager Name', count(o.emp_id) as team_size, sum(o.salary) as team_salary, count(o.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having team_size > 0, team_salary >= 200000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', team_salary >= 200000' at line 1
+mysql> select t.emp_name as 'Manager Name', count(o.emp_id) as team_size, sum(o.salary) as team_salary, count(o.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having team_salary >= 200000;
++---------------+-----------+-------------+--------------+
+| Manager Name  | team_size | team_salary | salary_total |
++---------------+-----------+-------------+--------------+
+| Arvind Sharma |         4 |      670000 |            4 |
++---------------+-----------+-------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> select t.emp_name as 'Manager Name', count(o.emp_id) as team_size, sum(t.salary) as team_salary, count(t.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having team_salary >= 200000;
++---------------+-----------+-------------+--------------+
+| Manager Name  | team_size | team_salary | salary_total |
++---------------+-----------+-------------+--------------+
+| Arvind Sharma |         4 |     1000000 |            4 |
+| Priya Patel   |         2 |      240000 |            2 |
+| Sunita Rao    |         1 |      200000 |            1 |
+| Amita Mishra  |         1 |      250000 |            1 |
++---------------+-----------+-------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> select t.emp_name as 'Manager Name', o.emp_name as team_members, min(t.salary) as min_salary, count(t.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'mydb.o.emp_name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select t.emp_name as 'Manager Name', o.emp_name as "Team Members", min(t.salary) as min_salary, count(t.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ASC' at line 1
+mysql> select t.emp_name as 'Manager Name', o.emp_name as "Team Members", min(t.salary) as min_salary, count(t.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id order by t.emp_id ASC;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'mydb.t.emp_name'; this is incompatible with sql_mode=only_full_group_by
+mysql> select t.emp_name as 'Manager Name', o.emp_name as "Team Members", min(t.salary) as min_salary, count(t.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id order by t.salary DESC;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'mydb.o.emp_name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select t.emp_name as 'Manager Name', o.emp_name as "Team Members", min(t.salary) as min_salary, count(t.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id order by t.salary DESC;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'mydb.o.emp_name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select t.emp_name as 'Manager Name', o.emp_name as "Team Members", min(t.salary) as min_salary, count(t.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_i having count(t.emp_id) = 4;
+ERROR 1054 (42S22): Unknown column 't.emp_i' in 'group statement'
+mysql> select t.emp_name as 'Manager Name', o.emp_name as "Team Members", min(t.salary) as min_salary, count(t.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having count(t.emp_id) = 4;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'mydb.o.emp_name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select t.emp_name as 'Manager Name', count(o.emp_name) as "Team Members", min(o.salary) as min_salary, count(o.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having count(t.emp_id) = 4;
++---------------+--------------+------------+--------------+
+| Manager Name  | Team Members | min_salary | salary_total |
++---------------+--------------+------------+--------------+
+| Arvind Sharma |            4 |     100000 |            4 |
++---------------+--------------+------------+--------------+
+1 row in set (0.03 sec)
+
+mysql> select t.emp_name as 'Manager Name', o_emp as "Team Members", count(o.emp_name) as "Team Members Size", min(o.salary) as min_salary, count(o.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having count(t.emp_id) = 4;
+ERROR 1054 (42S22): Unknown column 'o_emp' in 'field list'
+mysql> select t.emp_name as 'Manager Name', o.emp_id as "Team Members", count(o.emp_name) as "Team Members Size", min(o.salary) as min_salary, count(o.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having count(t.emp_id) = 4;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'mydb.o.emp_id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select t.emp_name as 'Manager Name', group_concat(o.emp_name) as "Team Members", min(o.salary) as min_salary, count(o.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having count(t.emp_id) <= 4;
++---------------+---------------------------------------------------+------------+--------------+
+| Manager Name  | Team Members                                      | min_salary | salary_total |
++---------------+---------------------------------------------------+------------+--------------+
+| Arvind Sharma | Priya Patel,Rajesh Khanna,Sunita Rao,Amita Mishra |     100000 |            4 |
+| Priya Patel   | Deepika Padukone,Rahul Dravid                     |      90000 |            2 |
+| Rajesh Khanna | Vijay Mallya                                      |      80000 |            1 |
+| Sunita Rao    | Ananya Pandey                                     |      95000 |            1 |
+| Amita Mishra  | Sanjay Dutt                                       |     110000 |            1 |
++---------------+---------------------------------------------------+------------+--------------+
+5 rows in set (0.04 sec)
+
+mysql> select t.emp_name as 'Manager Name', group_concat(o.emp_name) as "Team Members", max(o.salary) as max_salary, avg(o.salary) as "Average Salary", std(t.salary) as "Salary Deviation", count(o.salary) as salary_total from org_team o inner join org_team t on o.manager_id = t.emp_id group by t.emp_id having count(t.emp_id) <= 4;
++---------------+---------------------------------------------------+------------+----------------+------------------+--------------+
+| Manager Name  | Team Members                                      | max_salary | Average Salary | Salary Deviation | salary_total |
++---------------+---------------------------------------------------+------------+----------------+------------------+--------------+
+| Arvind Sharma | Priya Patel,Rajesh Khanna,Sunita Rao,Amita Mishra |     250000 |         167500 |                0 |            4 |
+| Priya Patel   | Deepika Padukone,Rahul Dravid                     |     105000 |          97500 |                0 |            2 |
+| Rajesh Khanna | Vijay Mallya                                      |      80000 |          80000 |                0 |            1 |
+| Sunita Rao    | Ananya Pandey                                     |      95000 |          95000 |                0 |            1 |
+| Amita Mishra  | Sanjay Dutt                                       |     110000 |         110000 |                0 |            1 |
++---------------+---------------------------------------------------+------------+----------------+------------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql>
