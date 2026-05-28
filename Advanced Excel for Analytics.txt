@@ -22,4 +22,45 @@ Based on the definitions of the descriptive and diagnostic KPIs, I would like to
 
 Q.4. Provide one justified reason to choose Excel and one reason to choose Power BI for analyzing Monthly Revenue.
 
-A.4.   
+A.4. Excel is useful for quick monthly revenue analysis because it allows fast manual calculations, filtering, formulae, and small-to-medium dataset analysis in a simple spreadsheet environment.
+Power BI is useful for monthly revenue analysis because it provides interactive dashboards, automated data visualization, and real-time business insights for large datasets.
+
+Q.5. Is "Number of Customers" a valid Diagnostic KPI for revenue trends? Justify by comparing Descriptive vs. Diagnostic logic
+
+A.5. A Descriptive KPI is a KPI that describes - What has already happened. It focuses on historic or current performance data. Purpose of the Descriptive KPI is to monitor performance, summarize business activity, understand trends, and track past outcomes. They do NOT predict the future directly. A Diagnostic KPI is a KPI used to understand - why did something happened. It helps analysts identify - causes, problems, root reasons, and performance drivers. Main purpose of diagnostic KPI is to tell "why did it happen" in contrast to "What happened." as in descriptive KPI.    
+Based on the definitions of the descriptive and diagnostic KPIs, I suggest that "Number of Customers" metric is a valid diagnostic KPI for revenue trend. in layman's term, revenue trend mean to see the revenue (or income) gained by a firm. And more the customers show up more will be the revenue. It provides a key information and directly answers to the question - why the revenue decreased or increased? 
+But there is a small catch in this theory. If we simply say that number of customers in a week in a particular store is say 500, then it behaves in a descriptive manner, answering to the question - what happened. It summarizes business activity. But if we add one line stating that the number of customers has decreased in the last week in comparison to the one prior by 20% causing the revenue to decrease by 10%, then it acts as a diagnostic KPI as it answers to the question why revenue decreased.  
+
+Q.6. Why is treating raw data columns (like UnitPrice) as KPIs incorrect, and what transformation steps are required to create a meaningful KPI?  
+
+A.6. Treating raw data columns like UnitPrice, Quantity, CustomerID, OrderDate as KPIs is incorrect because raw columns are individual data fields - NOT performance indicators. A KPI must:
+	- measure performance
+	- support decision-making
+	- align with business goals
+	- provide analytical meaning
+By itself, UnitPrice = ₹10 tells almost nothing. Question remains:
+	- Is ₹10 good or bad?
+	- Compared to what.
+	- Is revenue increasing?
+	- Are profits healthy?
+	- Are customers buying more?
+So raw columns are only building blocks of analysis and not actual business indicators.
+Transformation means - processing raw data into meaningful business measurements using calculations, aggregation, grouping, filtering, comparisons, ratios, and trends. Let us understand with an example. Raw columns are UnitPrice and Quantity with respective values as ₹100 for 5. Raw data alone is not KPI. But lets transform into Revenue as Revenue = UnitPrice x Quantity. Now you can get:
+	- Total Sales
+	- Monthly Revenue
+	- Average Order Value
+	- Profit Margin
+These become meaningful KPIs.
+Required Transformation Steps:
+	1. Data Cleaning:
+		- remove duplicates
+		- handle missing values
+		- fix datatype issues
+	2. Aggregation:
+		Combine raw records into summaries like daily revenue, monthly sales, customer totals etc.
+	3. Calculation:
+		Create derived metrics like Average Order Value = Revenue / Order or Profit Margin = (Profit / Revenue) x 100
+	4. Business Context:
+		Align with objective like revenue growth, customer retention, and operational efficiency
+	5. Visualization and Trend Analysis:    
+		Turn metrics into dashboards, trends, comparisons, and targets which are actionable KPs
