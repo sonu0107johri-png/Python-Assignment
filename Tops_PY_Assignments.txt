@@ -1,0 +1,8 @@
+Q.1. What are the types of Applications?
+A.1. Applications (or 'apps') are software programs designed to help users perform specific tasks. They are broadly categorized into three main types based on how they are built and where they run: Desktop, Web, and Mobile applications.
+	a. By Platform:
+		1. Desktop Applications: These are installed directly on a computer or laptop and run locally. They often offer high performance for heavy tasks like professional video editing or 3D design. Eg. Microsoft word, Adobe Photoshop, VLC Media Player.
+		2. Web Applications: These run in a web browser (like Chrome or Safari) and require an internet connection. They don't need to be installed on your device. Eg. Google Docs, Facebook, Netflix
+		3. Mobile Applications: Built specifically for smartphones and tablets. These can be native (coded for a specific system like iOS or Android) or hybrid (a mix of web and native tech)
+		4. Embedded Applications : A specialized software program designed to perform a dedicated function within an embedded system.  
+		5. 

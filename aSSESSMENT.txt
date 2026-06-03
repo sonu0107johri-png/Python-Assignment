@@ -1,0 +1,703 @@
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ipl_analysis_db    |
+| mydb               |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.01 sec)
+
+mysql> create database org;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ipl_analysis_db    |
+| mydb               |
+| mysql              |
+| org                |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.01 sec)
+
+mysql> use org;
+Database changed
+mysql> create table worker(WORKER_ID int not null primary key auto_increment, FIRST_NAME char(25), LAST__NAME char(25), SALARY int, JOINING_DATE datetime, DEPARTMENT char(25));
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> describe worker;
++--------------+----------+------+-----+---------+----------------+
+| Field        | Type     | Null | Key | Default | Extra          |
++--------------+----------+------+-----+---------+----------------+
+| WORKER_ID    | int      | NO   | PRI | NULL    | auto_increment |
+| FIRST_NAME   | char(25) | YES  |     | NULL    |                |
+| LAST__NAME   | char(25) | YES  |     | NULL    |                |
+| SALARY       | int      | YES  |     | NULL    |                |
+| JOINING_DATE | datetime | YES  |     | NULL    |                |
+| DEPARTMENT   | char(25) | YES  |     | NULL    |                |
++--------------+----------+------+-----+---------+----------------+
+6 rows in set (0.03 sec)
+
+mysql> insert into worker (FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) values('Monika', 'Arora', 100000, '21-02-20 09.00.00', 'HR');
+ERROR 1054 (42S22): Unknown column 'LAST_NAME' in 'field list'
+mysql> insert into worker (FIRST_NAME, LAST__NAME, SALARY, JOINING_DATE, DEPARTMENT) values('Monika', 'Arora', 100000, '21-02-20 09.00.00', 'HR');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> select * from worker;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
++-----------+------------+------------+--------+---------------------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into worker (FIRST_NAME, LAST__NAME, SALARY, JOINING_DATE, DEPARTMENT) values('Monika', 'Arora', 100000, '21-02-20 09.00.00', 'HR');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> select * from worker;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         2 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
++-----------+------------+------------+--------+---------------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> delete from worker where WORKER_ID = 2;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from worker;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
++-----------+------------+------------+--------+---------------------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into worker (FIRST_NAME, LAST__NAME, SALARY, JOINING_DATE, DEPARTMENT) values;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into worker (FIRST_NAME, LAST__NAME, SALARY, JOINING_DATE, DEPARTMENT) values
+    -> ('Niharika', 'Verma', 80000, '21-06-11 09.00.00', 'Admin');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> insert into worker (FIRST_NAME, LAST__NAME, SALARY, JOINING_DATE, DEPARTMENT) values
+    -> ('Vishal', 'Singhal', 300000, '21-02-20 09.00.00', 'HR'),;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> insert into worker (FIRST_NAME, LAST__NAME, SALARY, JOINING_DATE, DEPARTMENT) values
+    -> ('Vishal', 'Singhal', 300000, '21-02-20 09.00.00', 'HR'),
+    -> ('Amitabh', 'Singh', 500000, '21-02-20 09.00.00', 'Admin'),
+    -> ('Vivek', 'Bhati', 200000, '21-06-11 09.00.00', 'Admin'),
+    -> ('Vipul', 'Diwan', 500000, '21-06-11 09.00.00', 'Account'),
+    -> ('Satish', 'Kumar', 75000, '21-01-20 09.00.00', 'Account'),
+    -> ('Geetika', 'Chauhan', 90000, '21-04-11 09.00.00', 'Admin');
+Query OK, 6 rows affected, 6 warnings (0.08 sec)
+Records: 6  Duplicates: 0  Warnings: 6
+
+mysql> select * from worker;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> create table bonus(WORKER_REF_ID int, BONUS-AMT int(10), BONUS_DATE datetime, foreign key (WORKER_ID) references worker(WORKER_ID) on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-AMT int(10), BONUS_DATE datetime, foreign key (WORKER_ID) references worker(WOR' at line 1
+mysql> create table bonus(WORKER_REF_ID int, BONUS_AMT int(10), BONUS_DATE datetime, foreign key (WORKER_ID) references worker(WORKER_ID) on delete cascade);
+ERROR 1072 (42000): Key column 'WORKER_ID' doesn't exist in table
+mysql> create table bonus(WORKER_REF_ID int, BONUS_AMT int(10), BONUS_DATE datetime, foreign key (WORKER_REF_ID) references worker(WORKER_ID) on delete cascade);
+Query OK, 0 rows affected, 1 warning (0.09 sec)
+
+mysql> insert into bonus(BONUS_AMT, BONUS_DATE) values
+    -> (5000, '23-02-20'),
+    -> (3000, '23-06-11'),
+    -> (4000, '23-02-20'),
+    -> (4500, '23-02-20'),
+    -> (3500, '23-06-11');
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from bonus;
++---------------+-----------+---------------------+
+| WORKER_REF_ID | BONUS_AMT | BONUS_DATE          |
++---------------+-----------+---------------------+
+|          NULL |      5000 | 2023-02-20 00:00:00 |
+|          NULL |      3000 | 2023-06-11 00:00:00 |
+|          NULL |      4000 | 2023-02-20 00:00:00 |
+|          NULL |      4500 | 2023-02-20 00:00:00 |
+|          NULL |      3500 | 2023-06-11 00:00:00 |
++---------------+-----------+---------------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into bonus(WORKER_REF_ID) values
+    -> (001),
+    -> (002),
+    -> (003),
+    -> (004),
+    -> (005);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`org`.`bonus`, CONSTRAINT `bonus_ibfk_1` FOREIGN KEY (`WORKER_REF_ID`) REFERENCES `worker` (`WORKER_ID`) ON DELETE CASCADE)
+mysql> drop table bonus;
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> create table bonus(WORKER_REF_ID int, BONUS_AMT int(10), BONUS_DATE datetime, foreign key (WORKER_REF_ID) references worker(WORKER_ID) on delete cascade);
+Query OK, 0 rows affected, 1 warning (0.10 sec)
+
+mysql> insert into bonus(WORKER_REF_ID) values
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into bonus(WORKER_REF_ID, BONUS_AMT, BONUS_DATE) values
+    -> (001, 5000, '23-02-20'),
+    -> (002, 3000, '23-06-11'),
+    -> (003, 4000, '23-02-20'),
+    -> (004, 4500, '23-02-20'),
+    -> (005, 3500, '23-06-11');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`org`.`bonus`, CONSTRAINT `bonus_ibfk_1` FOREIGN KEY (`WORKER_REF_ID`) REFERENCES `worker` (`WORKER_ID`) ON DELETE CASCADE)
+mysql> insert into bonus(WORKER_REF_ID, BONUS_AMT, BONUS_DATE) values
+    -> (1, 5000, '23-02-20'),
+    -> (2, 3000, '23-06-11'),
+    -> (3, 4000, '23-02-20'),
+    -> (4, 4500, '23-02-20'),
+    -> (5, 3500, '23-06-11');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`org`.`bonus`, CONSTRAINT `bonus_ibfk_1` FOREIGN KEY (`WORKER_REF_ID`) REFERENCES `worker` (`WORKER_ID`) ON DELETE CASCADE)
+mysql> select * from bonus;
+Empty set (0.00 sec)
+
+mysql> select * from worker;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+8 rows in set (0.01 sec)
+
+mysql>
+mysql>
+mysql> create table bonus(WORKER_REF_ID int, BONUS_AMT int(10), BONUS_DATE datetime, foreign key (WORKER_REF_ID) references worker(WORKER_ID) on delete cascade);
+ERROR 1050 (42S01): Table 'bonus' already exists
+mysql> create table bonus(WORKER_REF_ID int, BONUS_AMT int(10), BONUS_DATE datetime, foreign key (WORKER_REF_ID) references worker(WORKER_ID) on delete cascade);
+ERROR 1050 (42S01): Table 'bonus' already exists
+mysql> insert into bonus(WORKER_REF_ID, BONUS_AMT, BONUS_DATE) values
+    -> (1, 5000, '23-02-20'),
+    -> (3, 3000, '23-06-11'),
+    -> (4, 3000, '23-06-11'),
+    -> (5, 3000, '23-06-11'),
+    -> (6, 3000, '23-06-11'),
+    -> (7, 4000, '23-06-11');
+Query OK, 6 rows affected (0.00 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from bonus;
++---------------+-----------+---------------------+
+| WORKER_REF_ID | BONUS_AMT | BONUS_DATE          |
++---------------+-----------+---------------------+
+|             1 |      5000 | 2023-02-20 00:00:00 |
+|             3 |      3000 | 2023-06-11 00:00:00 |
+|             4 |      3000 | 2023-06-11 00:00:00 |
+|             5 |      3000 | 2023-06-11 00:00:00 |
+|             6 |      3000 | 2023-06-11 00:00:00 |
+|             7 |      4000 | 2023-06-11 00:00:00 |
++---------------+-----------+---------------------+
+6 rows in set (0.00 sec)
+
+mysql> create table title (WORKER_REF_ID int, WORKER_TITLE char(25), AFFECTED_FROM datetime, foreign key (WORKER_REF_ID) references worker(WORKER_ID) on delete cascade);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into title (WORKER_REF_ID, WORKER_TITLE, AFFECTED_FROM) values
+    -> (1, 'Manager', '2023-02-20 00:00:00'),
+    -> (2, 'Executive', '2023-06-11 00:00:00'),
+    -> (8, 'Executive', '2023-06-11 00:00:00'),
+    -> (5, 'Manager', '2023-06-11 00:00:00'),
+    -> (4, 'Asst. Manager', '2023-06-11 00:00:00'),
+    -> (7, 'Executive', '2023-06-11 00:00:00'),
+    -> (6, 'Lead', '2023-06-11 00:00:00'),
+    -> (3, 'Lead', '2023-06-11 00:00:00'),
+    -> (3, 'Lead', '2023-06-11 00:00:00');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`org`.`title`, CONSTRAINT `title_ibfk_1` FOREIGN KEY (`WORKER_REF_ID`) REFERENCES `worker` (`WORKER_ID`) ON DELETE CASCADE)
+mysql> insert into title (WORKER_REF_ID, WORKER_TITLE, AFFECTED_FROM) values
+    -> (1, 'Manager', '2023-02-20 00:00:00'),
+    -> (7, 'Executive', '2023-06-11 00:00:00'),
+    -> (8, 'Executive', '2023-06-11 00:00:00'),
+    -> (5, 'Manager', '2023-06-11 00:00:00'),
+    -> (4, 'Asst. Manager', '2023-06-11 00:00:00'),
+    -> (9, 'Executive', '2023-06-11 00:00:00'),
+    -> (6, 'Lead', '2023-06-11 00:00:00'),
+    -> (3, 'Lead', '2023-06-11 00:00:00');
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from title;
++---------------+---------------+---------------------+
+| WORKER_REF_ID | WORKER_TITLE  | AFFECTED_FROM       |
++---------------+---------------+---------------------+
+|             1 | Manager       | 2023-02-20 00:00:00 |
+|             7 | Executive     | 2023-06-11 00:00:00 |
+|             8 | Executive     | 2023-06-11 00:00:00 |
+|             5 | Manager       | 2023-06-11 00:00:00 |
+|             4 | Asst. Manager | 2023-06-11 00:00:00 |
+|             9 | Executive     | 2023-06-11 00:00:00 |
+|             6 | Lead          | 2023-06-11 00:00:00 |
+|             3 | Lead          | 2023-06-11 00:00:00 |
++---------------+---------------+---------------------+
+8 rows in set (0.00 sec)
+
+mysql> select FIRST_NAME as WORKER_NAME from worker;
++-------------+
+| WORKER_NAME |
++-------------+
+| Monika      |
+| Niharika    |
+| Vishal      |
+| Amitabh     |
+| Vivek       |
+| Vipul       |
+| Satish      |
+| Geetika     |
++-------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from worker;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select upper(FIRST_NAME) from worker;
++-------------------+
+| upper(FIRST_NAME) |
++-------------------+
+| MONIKA            |
+| NIHARIKA          |
+| VISHAL            |
+| AMITABH           |
+| VIVEK             |
+| VIPUL             |
+| SATISH            |
+| GEETIKA           |
++-------------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from worker;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select WORKER_ID, upper(FIRST_NAME), LAST__NAME, SALARY, JOINING_DATE, DEPARTMENT from worker;
++-----------+-------------------+------------+--------+---------------------+------------+
+| WORKER_ID | upper(FIRST_NAME) | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+-------------------+------------+--------+---------------------+------------+
+|         1 | MONIKA            | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | NIHARIKA          | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         4 | VISHAL            | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | AMITABH           | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | VIVEK             | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         7 | VIPUL             | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         8 | SATISH            | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         9 | GEETIKA           | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+-------------------+------------+--------+---------------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select WORKER_ID, upper(FIRST_NAME), LAST__NAME, SALARY, JOINING_DATE, DEPARTMENT from worker where DEPARTMENT is unique;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'unique' at line 1
+mysql> select WORKER_ID, upper(FIRST_NAME), LAST__NAME, SALARY, JOINING_DATE, unique(DEPARTMENT) from worker;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'unique(DEPARTMENT) from worker' at line 1
+mysql> select WORKER_ID, upper(FIRST_NAME), LAST__NAME, SALARY, JOINING_DATE, distinct DEPARTMENT from worker;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'distinct DEPARTMENT from worker' at line 1
+mysql> select WORKER_ID, upper(FIRST_NAME), LAST__NAME, SALARY, JOINING_DATE, distinct(DEPARTMENT) from worker;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'distinct(DEPARTMENT) from worker' at line 1
+mysql> select distinct DEPARTMENT from worker;
++------------+
+| DEPARTMENT |
++------------+
+| HR         |
+| Admin      |
+| Account    |
++------------+
+3 rows in set (0.00 sec)
+
+mysql> select WORKER_ID, left(FIRST_NAME, 3), LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT from worker;
+ERROR 1054 (42S22): Unknown column 'LAST_NAME' in 'field list'
+mysql> select WORKER_ID, left(FIRST_NAME, 3), LAST__NAME, SALARY, JOINING_DATE, DEPARTMENT from worker;
++-----------+---------------------+------------+--------+---------------------+------------+
+| WORKER_ID | left(FIRST_NAME, 3) | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+---------------------+------------+--------+---------------------+------------+
+|         1 | Mon                 | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Nih                 | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         4 | Vis                 | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Ami                 | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | Viv                 | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         7 | Vip                 | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         8 | Sat                 | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         9 | Gee                 | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+---------------------+------------+--------+---------------------+------------+
+8 rows in set (0.00 sec)
+
+mysql>
+
+mysql> select instr(FIRST_NAME, 'a') from worker where WORKER_ID = 5
+    -> ;
++------------------------+
+| instr(FIRST_NAME, 'a') |
++------------------------+
+|                      1 |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql> select instr(FIRST_NAME, 'a') as "A_cont" from worker where WORKER_ID = 5;
++--------+
+| A_cont |
++--------+
+|      1 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select FIRST_NAME, locate('a', FIRST_NAME, 1) as Pos_1, locate('a', FIRST_NAME, locate('a', FIRST_NAME, 1) + 1) as Pos_2 from worker where WORKER_ID IS 5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '5' at line 1
+mysql> select FIRST_NAME, locate('a', FIRST_NAME, 1) as Pos_1, locate('a', FIRST_NAME, locate('a', FIRST_NAME, 1) + 1) as Pos_2 from worker where WORKER_ID = 5;
++------------+-------+-------+
+| FIRST_NAME | Pos_1 | Pos_2 |
++------------+-------+-------+
+| Amitabh    |     1 |     5 |
++------------+-------+-------+
+1 row in set (0.04 sec)
+
+mysql> select sum(lenght(FIRST_NAME)-lenght(replace(FIRST_NAME, 'a', ''))) as tot_Cot from worker;
+ERROR 1305 (42000): FUNCTION org.lenght does not exist
+mysql> select sum(length(FIRST_NAME)-length(replace(FIRST_NAME, 'a', ''))) as tot_Cot from worker;
++---------+
+| tot_Cot |
++---------+
+|       7 |
++---------+
+1 row in set (0.04 sec)
+
+mysql> select *, length(FIRST_NAME)-length(replace(FIRST_NAME, 'a', '')) as COUNT_A from worker;
++-----------+------------+------------+--------+---------------------+------------+---------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT | COUNT_A |
++-----------+------------+------------+--------+---------------------+------------+---------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |       1 |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |       2 |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |       1 |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |       1 |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |       0 |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |       0 |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |       1 |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |       1 |
++-----------+------------+------------+--------+---------------------+------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select sum(length(FIRST_NAME)) from worker;
++-------------------------+
+| sum(length(FIRST_NAME)) |
++-------------------------+
+|                      50 |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(length(FIRST_NAME)) as Total_Word_Count from worker;
++------------------+
+| Total_Word_Count |
++------------------+
+|               50 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select WORKER_ID, rtrim(FIRST_NAME), upper(LAST_NAME), SALARY, JOINING_DATE, DEPARTMENT from worker;
+ERROR 1054 (42S22): Unknown column 'LAST_NAME' in 'field list'
+mysql> select WORKER_ID, rtrim(FIRST_NAME), upper(LAST__NAME), SALARY, JOINING_DATE, DEPARTMENT from worker;
++-----------+-------------------+-------------------+--------+---------------------+------------+
+| WORKER_ID | rtrim(FIRST_NAME) | upper(LAST__NAME) | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+-------------------+-------------------+--------+---------------------+------------+
+|         1 | Monika            | ARORA             | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika          | VERMA             |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         4 | Vishal            | SINGHAL           | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh           | SINGH             | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | Vivek             | BHATI             | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         7 | Vipul             | DIWAN             | 500000 | 2021-06-11 09:00:00 | Account    |
+|         8 | Satish            | KUMAR             |  75000 | 2021-01-20 09:00:00 | Account    |
+|         9 | Geetika           | CHAUHAN           |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+-------------------+-------------------+--------+---------------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select WORKER_ID, rtrim(FIRST_NAME), upper(LAST__NAME), SALARY, JOINING_DATE, ltrim(DEPARTMENT) from worker;
++-----------+-------------------+-------------------+--------+---------------------+-------------------+
+| WORKER_ID | rtrim(FIRST_NAME) | upper(LAST__NAME) | SALARY | JOINING_DATE        | ltrim(DEPARTMENT) |
++-----------+-------------------+-------------------+--------+---------------------+-------------------+
+|         1 | Monika            | ARORA             | 100000 | 2021-02-20 09:00:00 | HR                |
+|         3 | Niharika          | VERMA             |  80000 | 2021-06-11 09:00:00 | Admin             |
+|         4 | Vishal            | SINGHAL           | 300000 | 2021-02-20 09:00:00 | HR                |
+|         5 | Amitabh           | SINGH             | 500000 | 2021-02-20 09:00:00 | Admin             |
+|         6 | Vivek             | BHATI             | 200000 | 2021-06-11 09:00:00 | Admin             |
+|         7 | Vipul             | DIWAN             | 500000 | 2021-06-11 09:00:00 | Account           |
+|         8 | Satish            | KUMAR             |  75000 | 2021-01-20 09:00:00 | Account           |
+|         9 | Geetika           | CHAUHAN           |  90000 | 2021-04-11 09:00:00 | Admin             |
++-----------+-------------------+-------------------+--------+---------------------+-------------------+
+8 rows in set (0.00 sec)
+
+mysql> select WORKER_ID, rtrim(FIRST_NAME) as "RT_FIRST_NAME", upper(LAST__NAME) as "UP_LAST_NAME", SALARY, JOINING_DATE, ltrim(DEPARTMENT) as "LT_DEPT" from worker;
++-----------+---------------+--------------+--------+---------------------+---------+
+| WORKER_ID | RT_FIRST_NAME | UP_LAST_NAME | SALARY | JOINING_DATE        | LT_DEPT |
++-----------+---------------+--------------+--------+---------------------+---------+
+|         1 | Monika        | ARORA        | 100000 | 2021-02-20 09:00:00 | HR      |
+|         3 | Niharika      | VERMA        |  80000 | 2021-06-11 09:00:00 | Admin   |
+|         4 | Vishal        | SINGHAL      | 300000 | 2021-02-20 09:00:00 | HR      |
+|         5 | Amitabh       | SINGH        | 500000 | 2021-02-20 09:00:00 | Admin   |
+|         6 | Vivek         | BHATI        | 200000 | 2021-06-11 09:00:00 | Admin   |
+|         7 | Vipul         | DIWAN        | 500000 | 2021-06-11 09:00:00 | Account |
+|         8 | Satish        | KUMAR        |  75000 | 2021-01-20 09:00:00 | Account |
+|         9 | Geetika       | CHAUHAN      |  90000 | 2021-04-11 09:00:00 | Admin   |
++-----------+---------------+--------------+--------+---------------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select WORKER_ID, rtrim(FIRST_NAME) as "RT_FIRST_NAME", upper(LAST__NAME) as "UP_LAST_NAME", SALARY, JOINING_DATE, unique(DEPARTMENT) as "LT_DEPT" from worker;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'unique(DEPARTMENT) as "LT_DEPT" from worker' at line 1
+mysql> select unique(DEPARTMENT) as "LT_DEPTARMENT" from worker;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'unique(DEPARTMENT) as "LT_DEPTARMENT" from worker' at line 1
+mysql> select distinct DEPARTMENT, lenght(DEPARTMENT) as Lenght from worker;
+ERROR 1305 (42000): FUNCTION org.lenght does not exist
+mysql> select distinct DEPARTMENT, length(DEPARTMENT) as Lenght from worker;
++------------+--------+
+| DEPARTMENT | Lenght |
++------------+--------+
+| HR         |      2 |
+| Admin      |      5 |
+| Account    |      7 |
++------------+--------+
+3 rows in set (0.01 sec)
+
+mysql> select replace(FIRST_NAME,'a', 'A') from worker;
++------------------------------+
+| replace(FIRST_NAME,'a', 'A') |
++------------------------------+
+| MonikA                       |
+| NihArikA                     |
+| VishAl                       |
+| AmitAbh                      |
+| Vivek                        |
+| Vipul                        |
+| SAtish                       |
+| GeetikA                      |
++------------------------------+
+8 rows in set (0.00 sec)
+
+mysql> select concat(FIRST_NAME, '', LAST_NAME) as "COMPLETE_NAME" from worker;
+ERROR 1054 (42S22): Unknown column 'LAST_NAME' in 'field list'
+mysql> select concat(FIRST_NAME, '', LAST__NAME) as "COMPLETE_NAME" from worker;
++----------------+
+| COMPLETE_NAME  |
++----------------+
+| MonikaArora    |
+| NiharikaVerma  |
+| VishalSinghal  |
+| AmitabhSingh   |
+| VivekBhati     |
+| VipulDiwan     |
+| SatishKumar    |
+| GeetikaChauhan |
++----------------+
+8 rows in set (0.00 sec)
+
+mysql> select WORKER_ID, COMPLETE_NAME, SALARY, JOINING_DATE, DEPARTMENT from worker;
+ERROR 1054 (42S22): Unknown column 'COMPLETE_NAME' in 'field list'
+mysql> select concat(FIRST_NAME, '', LAST__NAME) as COMPLETE_NAME from worker;
++----------------+
+| COMPLETE_NAME  |
++----------------+
+| MonikaArora    |
+| NiharikaVerma  |
+| VishalSinghal  |
+| AmitabhSingh   |
+| VivekBhati     |
+| VipulDiwan     |
+| SatishKumar    |
+| GeetikaChauhan |
++----------------+
+8 rows in set (0.00 sec)
+
+mysql> select WORKER_ID, COMPLETE_NAME, SALARY, JOINING_DATE, DEPARTMENT from worker;
+ERROR 1054 (42S22): Unknown column 'COMPLETE_NAME' in 'field list'
+mysql> select WORKER_ID, rtrim(FIRST_NAME) as RT_FIRST_NAME, lftrim(upper(LAST__NAME)) as LT_UP_LT_NM, concat(FIRST_NAME, '', LAST__NAME) as COMPLETE_NAME, SALARY, JOINING_DATE, ltrim(DEPARTMENT) as LT_DATE from worker;
+ERROR 1305 (42000): FUNCTION org.lftrim does not exist
+mysql> select WORKER_ID, rtrim(FIRST_NAME) as RT_FIRST_NAME, ltrim(upper(LAST__NAME)) as LT_UP_LT_NM, concat(FIRST_NAME, '', LAST__NAME) as COMPLETE_NAME, SALARY, JOINING_DATE, ltrim(DEPARTMENT) as LT_DATE from worker;
++-----------+---------------+-------------+----------------+--------+---------------------+---------+
+| WORKER_ID | RT_FIRST_NAME | LT_UP_LT_NM | COMPLETE_NAME  | SALARY | JOINING_DATE        | LT_DATE |
++-----------+---------------+-------------+----------------+--------+---------------------+---------+
+|         1 | Monika        | ARORA       | MonikaArora    | 100000 | 2021-02-20 09:00:00 | HR      |
+|         3 | Niharika      | VERMA       | NiharikaVerma  |  80000 | 2021-06-11 09:00:00 | Admin   |
+|         4 | Vishal        | SINGHAL     | VishalSinghal  | 300000 | 2021-02-20 09:00:00 | HR      |
+|         5 | Amitabh       | SINGH       | AmitabhSingh   | 500000 | 2021-02-20 09:00:00 | Admin   |
+|         6 | Vivek         | BHATI       | VivekBhati     | 200000 | 2021-06-11 09:00:00 | Admin   |
+|         7 | Vipul         | DIWAN       | VipulDiwan     | 500000 | 2021-06-11 09:00:00 | Account |
+|         8 | Satish        | KUMAR       | SatishKumar    |  75000 | 2021-01-20 09:00:00 | Account |
+|         9 | Geetika       | CHAUHAN     | GeetikaChauhan |  90000 | 2021-04-11 09:00:00 | Admin   |
++-----------+---------------+-------------+----------------+--------+---------------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select * from worker order by FIRST_NAME in asc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'asc' at line 1
+mysql> select * from worker order by FIRST_NAME asc;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from worker order by FIRST_NAME asc, order by DEPARTMENT desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by DEPARTMENT desc' at line 1
+mysql> select * from worker order by FIRST_NAME asc, DEPARTMENT desc;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+8 rows in set (0.03 sec)
+
+mysql> select * from worker order by FIRST_NAME asc, DEPARTMENT desc, SALARY asc;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from worker order by DEPARTMENT desc, FIRST_NAME asc, SALARY asc;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
++-----------+------------+------------+--------+---------------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from worker where WORKER_ID = 7, 8;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', 8' at line 1
+mysql> select * from worker where WORKER_ID = 7 or 8;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from worker where FIRST_NAME = 'Vipul' or 'Satish';
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
++-----------+------------+------------+--------+---------------------+------------+
+1 row in set, 1 warning (0.04 sec)
+
+mysql> select * from worker where FIRST_NAME = 'Vipul' and 'Satish';
+Empty set, 1 warning (0.00 sec)
+
+mysql> select * from worker where FIRST_NAME in ('Vipul', 'Satish');
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
++-----------+------------+------------+--------+---------------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from worker where FIRST_NAME in ('Vipul', 'Satish');
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
++-----------+------------+------------+--------+---------------------+------------+
+2 rows in set (0.00 sec)
+
+mysql>
