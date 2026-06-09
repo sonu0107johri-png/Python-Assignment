@@ -700,4 +700,265 @@ mysql> select * from worker where FIRST_NAME in ('Vipul', 'Satish');
 +-----------+------------+------------+--------+---------------------+------------+
 2 rows in set (0.00 sec)
 
+mysql> select * from workers where DEPARTMENT = Admin;
+ERROR 1146 (42S02): Table 'org.workers' doesn't exist
+mysql> select * from worker where DEPARTMENT = Admin;
+ERROR 1054 (42S22): Unknown column 'Admin' in 'where clause'
+mysql> select * from worker where DEPARTMENT is "Admin";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"Admin"' at line 1
+mysql> select * from worker where DEPARTMENT = 'Admin';
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+4 rows in set (0.04 sec)
+
+mysql> select * from worker where FIRST_NAME like "%a";
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+3 rows in set (0.04 sec)
+
+mysql> select * from worker where FIRST_NAME like "%a%";
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from worker where FIRST_NAME like "a%";
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from worker where FIRST_NAME like "%h%", length(FIRST_NAME) = 6;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', length(FIRST_NAME) = 6' at line 1
+mysql> select WORKER_ID, length(FIRST_NAME) = 6 as "F_6_N", LAST__NAME, SALARY, JOINING_DATE, DEPARTMENT from worker where FIRST_NAME like "%h%";
++-----------+-------+------------+--------+---------------------+------------+
+| WORKER_ID | F_6_N | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+-------+------------+--------+---------------------+------------+
+|         3 |     0 | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         4 |     1 | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 |     0 | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         8 |     1 | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
++-----------+-------+------------+--------+---------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select WORKER_ID, FIRST_NAME, length(FIRST_NAME) = 6 as "F_6_N", LAST__NAME, SALARY, JOINING_DATE, DEPARTMENT from worker where FIRST_NAME like "%h%";
++-----------+------------+-------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | F_6_N | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+-------+------------+--------+---------------------+------------+
+|         3 | Niharika   |     0 | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         4 | Vishal     |     1 | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh    |     0 | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         8 | Satish     |     1 | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
++-----------+------------+-------+------------+--------+---------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from worker where FIRST_NAME like "%h%" and length(FIRST_NAME) = 6;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
++-----------+------------+------------+--------+---------------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from worker where emp_salary between 100000 and 500000;
+ERROR 1054 (42S22): Unknown column 'emp_salary' in 'where clause'
+mysql> select * from worker where SALARY between 100000 and 500000;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
++-----------+------------+------------+--------+---------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from worker where JOINING_DATE = "%%-02-2026";
+ERROR 1525 (HY000): Incorrect DATETIME value: '%%-02-2026'
+mysql> select * from worker where JOINING_DATE = "-02-2026";
+ERROR 1525 (HY000): Incorrect DATETIME value: '-02-2026'
+mysql> select * from worker where year(JOINING_DATE) = "2021" and month(JOINING_DATE) = '2';
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+3 rows in set (0.04 sec)
+
+mysql> select * from worker where DEPARTMENT = "Admin";
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql>mysql> select count(*) as Admin_Count from worker where department = "Admin";
++-------------+
+| Admin_Count |
++-------------+
+|           4 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select First_Name, Last_Name from worker where SALARY is not between (50000, 100000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'between (50000, 100000)' at line 1
+mysql> select First_Name, Last_Name from worker where SALARY between 50000 and 100000;
+ERROR 1054 (42S22): Unknown column 'Last_Name' in 'field list'
+mysql> select First_Name, Last__Name from worker where SALARY between 50000 and 100000;
++------------+------------+
+| First_Name | Last__Name |
++------------+------------+
+| Monika     | Arora      |
+| Niharika   | Verma      |
+| Satish     | Kumar      |
+| Geetika    | Chauhan    |
++------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from worker order by DEPARTMENT in desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select * from worker order by DEPARTMENT desc;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
++-----------+------------+------------+--------+---------------------+------------+
+8 rows in set (0.03 sec)
+
+mysql> select DEPARTMENT, count(*) as Worker_Count from worker group by DEPARTMENT order by Worker_Count desc;
++------------+--------------+
+| DEPARTMENT | Worker_Count |
++------------+--------------+
+| Admin      |            4 |
+| HR         |            2 |
+| Account    |            2 |
++------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select w.* from worker w join title t on w.WORKER_ID = t.WORKER_REF_ID where t.WORKER_TITLE = 'Manager';
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from worker group by FIRST_NAME, DEPARTMENT having count(*) > 1;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'org.worker.WORKER_ID' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select FIRST_NAME, DEPARTMENT, count(*) as Duplicate_Ct from worker group by FIRST_NAME, DEPARTMENT having count(*) > 1;
+Empty set (0.00 sec)
+
+mysql> select w.* from worker w join (select FIRST_NAME, DEPARTMENT from worker group by FIRST_NAME, DEPARTMENT having count(*) > 1) d on w.FIRST_NAME = D.FIRST_NAME and w.DEPARTMENT = d.DEPARTMENT;
+Empty set (0.04 sec)
+
+mysql> select * from worker where id % 2 != 0;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> select * from worker group by id % 2 != 0;
+ERROR 1054 (42S22): Unknown column 'id' in 'group statement'
+mysql> select * from worker group by WORKER_ID % 2 != 0;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'org.worker.WORKER_ID' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select * from worker where mod(WORKER_ID, 2) <> 0;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+5 rows in set (0.04 sec)
+
+mysql> select * from worker where mod(WORKER_ID, 2) == 0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '== 0' at line 1
+mysql> select * from worker where mod(WORKER_ID, 2) = 0;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
++-----------+------------+------------+--------+---------------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> create table worker_copy as select * from worker;
+Query OK, 8 rows affected (0.07 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from worker_copy;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> create table worker_copy like woprker;
+ERROR 1146 (42S02): Table 'org.woprker' doesn't exist
+mysql> create table worker_copy like worker;
+ERROR 1050 (42S01): Table 'worker_copy' already exists
+mysql> create table worker_copy_1 like worker;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> select * from worker_copy_1;
+Empty set (0.01 sec)
+
+mysql> select w.* from worker w inner join worker_copy wc on w.WORKER_ID = wc.WORKER_ID;
++-----------+------------+------------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST__NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+------------+--------+---------------------+------------+
+|         1 | Monika     | Arora      | 100000 | 2021-02-20 09:00:00 | HR         |
+|         3 | Niharika   | Verma      |  80000 | 2021-06-11 09:00:00 | Admin      |
+|         4 | Vishal     | Singhal    | 300000 | 2021-02-20 09:00:00 | HR         |
+|         5 | Amitabh    | Singh      | 500000 | 2021-02-20 09:00:00 | Admin      |
+|         6 | Vivek      | Bhati      | 200000 | 2021-06-11 09:00:00 | Admin      |
+|         7 | Vipul      | Diwan      | 500000 | 2021-06-11 09:00:00 | Account    |
+|         8 | Satish     | Kumar      |  75000 | 2021-01-20 09:00:00 | Account    |
+|         9 | Geetika    | Chauhan    |  90000 | 2021-04-11 09:00:00 | Admin      |
++-----------+------------+------------+--------+---------------------+------------+
+8 rows in set (0.00 sec)
+
 mysql>
