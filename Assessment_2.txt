@@ -1,0 +1,638 @@
+13-06-2026
+
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ipl_analysis_db    |
+| m1db               |
+| mydb               |
+| mysql              |
+| org                |
+| performance_schema |
+| sakila             |
+| stock_analysis     |
+| sys                |
+| triggerdb          |
+| world              |
++--------------------+
+12 rows in set (0.05 sec)
+
+mysql> create database if not exists CustomerDB;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| customerdb         |
+| information_schema |
+| ipl_analysis_db    |
+| m1db               |
+| mydb               |
+| mysql              |
+| org                |
+| performance_schema |
+| sakila             |
+| stock_analysis     |
+| sys                |
+| triggerdb          |
+| world              |
++--------------------+
+13 rows in set (0.01 sec)
+
+mysql> use CustomerDB
+Database changed
+mysql> create table Departments (
+    -> dept_id int primary key,
+    -> dept_name varchar(50) not null
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> create table Employees (
+    -> emp_id int primary key,
+    -> emp_name varchar(50) not null,
+    -> manager_id int,
+    -> salary decimal(10, 2),
+    -> dept_id int,
+    -> hire_date datetime,
+    -> foreign key (dept_id) references Departments(dept_id)
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> create table Products (
+    -> product_id int primary key,
+    -> product_name varchar(50),
+    -> category varchar(50)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create table Sales (
+    -> sale_id int primary key auto_increment,
+    -> emp_id int,
+    -> product_id int,
+    -> sale_date datetime,
+    -> quantity int,
+    -> amount decimal(10, 2),
+    -> foreign key (emp_id) references Employees(emp_id),
+    -> foreign key (product_id) references Products(product_id)
+    -> );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> insert into Departments values
+    -> (1, "HR"),
+    -> (2, "Engineering"),
+    -> (3, "Sales"),
+    -> (4, "Marketing");
+Query OK, 4 rows affected (0.03 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> describe Departments;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| dept_id   | int         | NO   | PRI | NULL    |       |
+| dept_name | varchar(50) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+
+mysql> select * from Departments;
++---------+-------------+
+| dept_id | dept_name   |
++---------+-------------+
+|       1 | HR          |
+|       2 | Engineering |
+|       3 | Sales       |
+|       4 | Marketing   |
++---------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> describe Employees;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| emp_id     | int           | NO   | PRI | NULL    |       |
+| emp_name   | varchar(50)   | NO   |     | NULL    |       |
+| manager_id | int           | YES  |     | NULL    |       |
+| salary     | decimal(10,2) | YES  |     | NULL    |       |
+| dept_id    | int           | YES  | MUL | NULL    |       |
+| hire_date  | datetime      | YES  |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> describe Products;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| product_id   | int         | NO   | PRI | NULL    |       |
+| product_name | varchar(50) | YES  |     | NULL    |       |
+| category     | varchar(50) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> describe Sales;
++------------+---------------+------+-----+---------+----------------+
+| Field      | Type          | Null | Key | Default | Extra          |
++------------+---------------+------+-----+---------+----------------+
+| sale_id    | int           | NO   | PRI | NULL    | auto_increment |
+| emp_id     | int           | YES  | MUL | NULL    |                |
+| product_id | int           | YES  | MUL | NULL    |                |
+| sale_date  | datetime      | YES  |     | NULL    |                |
+| quantity   | int           | YES  |     | NULL    |                |
+| amount     | decimal(10,2) | YES  |     | NULL    |                |
++------------+---------------+------+-----+---------+----------------+
+6 rows in set (0.01 sec)
+
+mysql> insert into Employees values
+    -> (101, "Sonu", Null, 120000, 2, "2021-01-15 09:00:00"),
+    -> (102, "Ram", 101, 95000, 2, "2021-06-20 15:00:00"),
+    -> (103, "Dheer", 101, 80000, 2, "2022-03-10 12:00:00"),
+    -> (104, "David", Null, 110000, 3, "2020-11-05 01:00:00"),
+    -> (105, "Montu", 104, 70000, 3, "2022-01-10 14:30:00"),
+    -> (106, "Hardik", Null, 105000, 1, "2020-01-07 10:30:00"),
+    -> (107, "Shreya", 106, 95000, 1, "2022-06-27 16:30:00"),
+    -> (108, "Devika", 106, 85000, 1, "2023-03-27 16:30:00"),
+    -> (109, "Yesha", Null, 125000, 4, "2021-10-10 11:30:00"),
+    -> (110, "Kavya", 109, 75000, 4, "2021-10-10 13:30:00"),
+    -> (111, "Nishika", 109, 105000, 4, "2021-10-15 12:30:00"),
+    -> (112, "Anu", 104, 105000, 4, "2021-10-15 12:30:00");
+Query OK, 12 rows affected (0.02 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+
+mysql> select * from Employees;
++--------+----------+------------+-----------+---------+---------------------+
+| emp_id | emp_name | manager_id | salary    | dept_id | hire_date           |
++--------+----------+------------+-----------+---------+---------------------+
+|    101 | Sonu     |       NULL | 120000.00 |       2 | 2021-01-15 09:00:00 |
+|    102 | Ram      |        101 |  95000.00 |       2 | 2021-06-20 15:00:00 |
+|    103 | Dheer    |        101 |  80000.00 |       2 | 2022-03-10 12:00:00 |
+|    104 | David    |       NULL | 110000.00 |       3 | 2020-11-05 01:00:00 |
+|    105 | Montu    |        104 |  70000.00 |       3 | 2022-01-10 14:30:00 |
+|    106 | Hardik   |       NULL | 105000.00 |       1 | 2020-01-07 10:30:00 |
+|    107 | Shreya   |        106 |  95000.00 |       1 | 2022-06-27 16:30:00 |
+|    108 | Devika   |        106 |  85000.00 |       1 | 2023-03-27 16:30:00 |
+|    109 | Yesha    |       NULL | 125000.00 |       4 | 2021-10-10 11:30:00 |
+|    110 | Kavya    |        109 |  75000.00 |       4 | 2021-10-10 13:30:00 |
+|    111 | Nishika  |        109 | 105000.00 |       4 | 2021-10-15 12:30:00 |
+|    112 | Anu      |        104 | 105000.00 |       4 | 2021-10-15 12:30:00 |
++--------+----------+------------+-----------+---------+---------------------+
+12 rows in set (0.00 sec)
+
+mysql> insert into Products values
+    -> (1, "Laptop", "Electronics"),
+    -> (2, "Top", "Toys"),
+    -> (3, "SaaS License", "Software"),
+    -> (4, "Monitor", "Electronics"),
+    -> (5, "Cloud Storage", "Software"),
+    -> (6, "Doll", "Toys");
+Query OK, 6 rows affected (0.04 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> insert into Sales (emp_id, product_id, sale_date, quantity, amount) values
+    -> (104, 3, "2024-01-10", 5, 2500.00),
+    -> (105, 1, "2024-01-12", 2, 2400.00),
+    -> (112, 4, "2024-01-15", 10, 1000.00),
+    -> (101, 6, "2024-01-27", 2, 1000.00),
+    -> (109, 5, "2024-01-31", 4, 1500.00),
+    -> (106, 1, "2024-02-14", 3, 10000.00),
+    -> (102, 2, "2024-02-14", 3, 1000.00),
+    -> (107, 5, "2024-02-20", 9, 1500.00),
+    -> (111, 4, "2024-02-28", 10, 3000.00),
+    -> (110, 2, "2024-03-23", 1, 3000.00),
+    -> (103, 3, "2024-04-01", 7, 3500.00),
+    -> (108, 5, "2024-04-30", 5, 4000.00);
+Query OK, 12 rows affected (0.04 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+
+mysql> select * from Products;
++------------+---------------+-------------+
+| product_id | product_name  | category    |
++------------+---------------+-------------+
+|          1 | Laptop        | Electronics |
+|          2 | Top           | Toys        |
+|          3 | SaaS License  | Software    |
+|          4 | Monitor       | Electronics |
+|          5 | Cloud Storage | Software    |
+|          6 | Doll          | Toys        |
++------------+---------------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Sales;
++---------+--------+------------+---------------------+----------+----------+
+| sale_id | emp_id | product_id | sale_date           | quantity | amount   |
++---------+--------+------------+---------------------+----------+----------+
+|       1 |    104 |          3 | 2024-01-10 00:00:00 |        5 |  2500.00 |
+|       2 |    105 |          1 | 2024-01-12 00:00:00 |        2 |  2400.00 |
+|       3 |    112 |          4 | 2024-01-15 00:00:00 |       10 |  1000.00 |
+|       4 |    101 |          6 | 2024-01-27 00:00:00 |        2 |  1000.00 |
+|       5 |    109 |          5 | 2024-01-31 00:00:00 |        4 |  1500.00 |
+|       6 |    106 |          1 | 2024-02-14 00:00:00 |        3 | 10000.00 |
+|       7 |    102 |          2 | 2024-02-14 00:00:00 |        3 |  1000.00 |
+|       8 |    107 |          5 | 2024-02-20 00:00:00 |        9 |  1500.00 |
+|       9 |    111 |          4 | 2024-02-28 00:00:00 |       10 |  3000.00 |
+|      10 |    110 |          2 | 2024-03-23 00:00:00 |        1 |  3000.00 |
+|      11 |    103 |          3 | 2024-04-01 00:00:00 |        7 |  3500.00 |
+|      12 |    108 |          5 | 2024-04-30 00:00:00 |        5 |  4000.00 |
++---------+--------+------------+---------------------+----------+----------+
+12 rows in set (0.00 sec)
+
+mysql> select e.emp_name, d.dept_name from Employees e inner join Departments d on e.dept_id = d.dept_id;
++----------+-------------+
+| emp_name | dept_name   |
++----------+-------------+
+| Hardik   | HR          |
+| Shreya   | HR          |
+| Devika   | HR          |
+| Sonu     | Engineering |
+| Ram      | Engineering |
+| Dheer    | Engineering |
+| David    | Sales       |
+| Montu    | Sales       |
+| Yesha    | Marketing   |
+| Kavya    | Marketing   |
+| Nishika  | Marketing   |
+| Anu      | Marketing   |
++----------+-------------+
+12 rows in set (0.00 sec)
+
+mysql> select * from employees;
++--------+----------+------------+-----------+---------+---------------------+
+| emp_id | emp_name | manager_id | salary    | dept_id | hire_date           |
++--------+----------+------------+-----------+---------+---------------------+
+|    101 | Sonu     |       NULL | 120000.00 |       2 | 2021-01-15 09:00:00 |
+|    102 | Ram      |        101 |  95000.00 |       2 | 2021-06-20 15:00:00 |
+|    103 | Dheer    |        101 |  80000.00 |       2 | 2022-03-10 12:00:00 |
+|    104 | David    |       NULL | 110000.00 |       3 | 2020-11-05 01:00:00 |
+|    105 | Montu    |        104 |  70000.00 |       3 | 2022-01-10 14:30:00 |
+|    106 | Hardik   |       NULL | 105000.00 |       1 | 2020-01-07 10:30:00 |
+|    107 | Shreya   |        106 |  95000.00 |       1 | 2022-06-27 16:30:00 |
+|    108 | Devika   |        106 |  85000.00 |       1 | 2023-03-27 16:30:00 |
+|    109 | Yesha    |       NULL | 125000.00 |       4 | 2021-10-10 11:30:00 |
+|    110 | Kavya    |        109 |  75000.00 |       4 | 2021-10-10 13:30:00 |
+|    111 | Nishika  |        109 | 105000.00 |       4 | 2021-10-15 12:30:00 |
+|    112 | Anu      |        104 | 105000.00 |       4 | 2021-10-15 12:30:00 |
++--------+----------+------------+-----------+---------+---------------------+
+12 rows in set (0.00 sec)
+
+mysql> select * from employees where manager_id is null;
++--------+----------+------------+-----------+---------+---------------------+
+| emp_id | emp_name | manager_id | salary    | dept_id | hire_date           |
++--------+----------+------------+-----------+---------+---------------------+
+|    101 | Sonu     |       NULL | 120000.00 |       2 | 2021-01-15 09:00:00 |
+|    104 | David    |       NULL | 110000.00 |       3 | 2020-11-05 01:00:00 |
+|    106 | Hardik   |       NULL | 105000.00 |       1 | 2020-01-07 10:30:00 |
+|    109 | Yesha    |       NULL | 125000.00 |       4 | 2021-10-10 11:30:00 |
++--------+----------+------------+-----------+---------+---------------------+
+4 rows in set (0.03 sec)
+
+mysql> select category from products;
++-------------+
+| category    |
++-------------+
+| Electronics |
+| Toys        |
+| Software    |
+| Electronics |
+| Software    |
+| Toys        |
++-------------+
+6 rows in set (0.00 sec)
+
+mysql> select product_name, category from products;
++---------------+-------------+
+| product_name  | category    |
++---------------+-------------+
+| Laptop        | Electronics |
+| Top           | Toys        |
+| SaaS License  | Software    |
+| Monitor       | Electronics |
+| Cloud Storage | Software    |
+| Doll          | Toys        |
++---------------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select distinct category from products;
++-------------+
+| category    |
++-------------+
+| Electronics |
+| Toys        |
+| Software    |
++-------------+
+3 rows in set (0.04 sec)
+
+mysql> select * from employees;
++--------+----------+------------+-----------+---------+---------------------+
+| emp_id | emp_name | manager_id | salary    | dept_id | hire_date           |
++--------+----------+------------+-----------+---------+---------------------+
+|    101 | Sonu     |       NULL | 120000.00 |       2 | 2021-01-15 09:00:00 |
+|    102 | Ram      |        101 |  95000.00 |       2 | 2021-06-20 15:00:00 |
+|    103 | Dheer    |        101 |  80000.00 |       2 | 2022-03-10 12:00:00 |
+|    104 | David    |       NULL | 110000.00 |       3 | 2020-11-05 01:00:00 |
+|    105 | Montu    |        104 |  70000.00 |       3 | 2022-01-10 14:30:00 |
+|    106 | Hardik   |       NULL | 105000.00 |       1 | 2020-01-07 10:30:00 |
+|    107 | Shreya   |        106 |  95000.00 |       1 | 2022-06-27 16:30:00 |
+|    108 | Devika   |        106 |  85000.00 |       1 | 2023-03-27 16:30:00 |
+|    109 | Yesha    |       NULL | 125000.00 |       4 | 2021-10-10 11:30:00 |
+|    110 | Kavya    |        109 |  75000.00 |       4 | 2021-10-10 13:30:00 |
+|    111 | Nishika  |        109 | 105000.00 |       4 | 2021-10-15 12:30:00 |
+|    112 | Anu      |        104 | 105000.00 |       4 | 2021-10-15 12:30:00 |
++--------+----------+------------+-----------+---------+---------------------+
+12 rows in set (0.00 sec)
+
+mysql> select * from employees where hire_date > "2022-01-01 09:00:00";
++--------+----------+------------+----------+---------+---------------------+
+| emp_id | emp_name | manager_id | salary   | dept_id | hire_date           |
++--------+----------+------------+----------+---------+---------------------+
+|    103 | Dheer    |        101 | 80000.00 |       2 | 2022-03-10 12:00:00 |
+|    105 | Montu    |        104 | 70000.00 |       3 | 2022-01-10 14:30:00 |
+|    107 | Shreya   |        106 | 95000.00 |       1 | 2022-06-27 16:30:00 |
+|    108 | Devika   |        106 | 85000.00 |       1 | 2023-03-27 16:30:00 |
++--------+----------+------------+----------+---------+---------------------+
+4 rows in set (0.04 sec)
+
+mysql> select * from sales;
++---------+--------+------------+---------------------+----------+----------+
+| sale_id | emp_id | product_id | sale_date           | quantity | amount   |
++---------+--------+------------+---------------------+----------+----------+
+|       1 |    104 |          3 | 2024-01-10 00:00:00 |        5 |  2500.00 |
+|       2 |    105 |          1 | 2024-01-12 00:00:00 |        2 |  2400.00 |
+|       3 |    112 |          4 | 2024-01-15 00:00:00 |       10 |  1000.00 |
+|       4 |    101 |          6 | 2024-01-27 00:00:00 |        2 |  1000.00 |
+|       5 |    109 |          5 | 2024-01-31 00:00:00 |        4 |  1500.00 |
+|       6 |    106 |          1 | 2024-02-14 00:00:00 |        3 | 10000.00 |
+|       7 |    102 |          2 | 2024-02-14 00:00:00 |        3 |  1000.00 |
+|       8 |    107 |          5 | 2024-02-20 00:00:00 |        9 |  1500.00 |
+|       9 |    111 |          4 | 2024-02-28 00:00:00 |       10 |  3000.00 |
+|      10 |    110 |          2 | 2024-03-23 00:00:00 |        1 |  3000.00 |
+|      11 |    103 |          3 | 2024-04-01 00:00:00 |        7 |  3500.00 |
+|      12 |    108 |          5 | 2024-04-30 00:00:00 |        5 |  4000.00 |
++---------+--------+------------+---------------------+----------+----------+
+12 rows in set (0.00 sec)
+
+mysql> select sum(amount) as revenue_gen from sales;
++-------------+
+| revenue_gen |
++-------------+
+|    34400.00 |
++-------------+
+1 row in set (0.03 sec)
+
+mysql> select * from Employees order by salary desc limit 3;
++--------+----------+------------+-----------+---------+---------------------+
+| emp_id | emp_name | manager_id | salary    | dept_id | hire_date           |
++--------+----------+------------+-----------+---------+---------------------+
+|    109 | Yesha    |       NULL | 125000.00 |       4 | 2021-10-10 11:30:00 |
+|    101 | Sonu     |       NULL | 120000.00 |       2 | 2021-01-15 09:00:00 |
+|    104 | David    |       NULL | 110000.00 |       3 | 2020-11-05 01:00:00 |
++--------+----------+------------+-----------+---------+---------------------+
+3 rows in set (0.04 sec)
+
+mysql> select count(emp_id) as T_N_E from employees e inner join departments d on d.dept_id = e.dept_id;
++-------+
+| T_N_E |
++-------+
+|    12 |
++-------+
+1 row in set (0.00 sec)
+
+
+14-06-2026
+
+mysql> select d.dept_name, count(e.emp_id) as T_N_E from employees e inner join departments d on e.dept_id = d.dept_id group by d.dept_name;
++-------------+-------+
+| dept_name   | T_N_E |
++-------------+-------+
+| HR          |     3 |
+| Engineering |     3 |
+| Sales       |     2 |
+| Marketing   |     4 |
++-------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select avg(e.salary) as A_T_S from employees e inner join departments d on e.dept_id = d.dept_id where d.dept_id = 2;
++--------------+
+| A_T_S        |
++--------------+
+| 98333.333333 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select d.*, avg(e.salary) as A_T_S_1 from employees e inner join departments d on e.dept_id = d.dept_id group by dept_id, dept_name;
++---------+-------------+---------------+
+| dept_id | dept_name   | A_T_S_1       |
++---------+-------------+---------------+
+|       1 | HR          |  95000.000000 |
+|       2 | Engineering |  98333.333333 |
+|       3 | Sales       |  90000.000000 |
+|       4 | Marketing   | 102500.000000 |
++---------+-------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from sales;
++---------+--------+------------+---------------------+----------+----------+
+| sale_id | emp_id | product_id | sale_date           | quantity | amount   |
++---------+--------+------------+---------------------+----------+----------+
+|       1 |    104 |          3 | 2024-01-10 00:00:00 |        5 |  2500.00 |
+|       2 |    105 |          1 | 2024-01-12 00:00:00 |        2 |  2400.00 |
+|       3 |    112 |          4 | 2024-01-15 00:00:00 |       10 |  1000.00 |
+|       4 |    101 |          6 | 2024-01-27 00:00:00 |        2 |  1000.00 |
+|       5 |    109 |          5 | 2024-01-31 00:00:00 |        4 |  1500.00 |
+|       6 |    106 |          1 | 2024-02-14 00:00:00 |        3 | 10000.00 |
+|       7 |    102 |          2 | 2024-02-14 00:00:00 |        3 |  1000.00 |
+|       8 |    107 |          5 | 2024-02-20 00:00:00 |        9 |  1500.00 |
+|       9 |    111 |          4 | 2024-02-28 00:00:00 |       10 |  3000.00 |
+|      10 |    110 |          2 | 2024-03-23 00:00:00 |        1 |  3000.00 |
+|      11 |    103 |          3 | 2024-04-01 00:00:00 |        7 |  3500.00 |
+|      12 |    108 |          5 | 2024-04-30 00:00:00 |        5 |  4000.00 |
++---------+--------+------------+---------------------+----------+----------+
+12 rows in set (0.00 sec)
+
+mysql> select * from sales where amount > 1500.00;
++---------+--------+------------+---------------------+----------+----------+
+| sale_id | emp_id | product_id | sale_date           | quantity | amount   |
++---------+--------+------------+---------------------+----------+----------+
+|       1 |    104 |          3 | 2024-01-10 00:00:00 |        5 |  2500.00 |
+|       2 |    105 |          1 | 2024-01-12 00:00:00 |        2 |  2400.00 |
+|       6 |    106 |          1 | 2024-02-14 00:00:00 |        3 | 10000.00 |
+|       9 |    111 |          4 | 2024-02-28 00:00:00 |       10 |  3000.00 |
+|      10 |    110 |          2 | 2024-03-23 00:00:00 |        1 |  3000.00 |
+|      11 |    103 |          3 | 2024-04-01 00:00:00 |        7 |  3500.00 |
+|      12 |    108 |          5 | 2024-04-30 00:00:00 |        5 |  4000.00 |
++---------+--------+------------+---------------------+----------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select s.*, p.product_name, p.category from sales s inner join products p on s.product_id = p.product_id group by s.sale_id, s.emp_id, s.sale_date, s.quantity, s.amount having s.amount > 1500.00;
++---------+--------+------------+---------------------+----------+----------+---------------+-------------+
+| sale_id | emp_id | product_id | sale_date           | quantity | amount   | product_name  | category    |
++---------+--------+------------+---------------------+----------+----------+---------------+-------------+
+|       2 |    105 |          1 | 2024-01-12 00:00:00 |        2 |  2400.00 | Laptop        | Electronics |
+|       6 |    106 |          1 | 2024-02-14 00:00:00 |        3 | 10000.00 | Laptop        | Electronics |
+|      10 |    110 |          2 | 2024-03-23 00:00:00 |        1 |  3000.00 | Top           | Toys        |
+|       1 |    104 |          3 | 2024-01-10 00:00:00 |        5 |  2500.00 | SaaS License  | Software    |
+|      11 |    103 |          3 | 2024-04-01 00:00:00 |        7 |  3500.00 | SaaS License  | Software    |
+|       9 |    111 |          4 | 2024-02-28 00:00:00 |       10 |  3000.00 | Monitor       | Electronics |
+|      12 |    108 |          5 | 2024-04-30 00:00:00 |        5 |  4000.00 | Cloud Storage | Software    |
++---------+--------+------------+---------------------+----------+----------+---------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> select s.*, p.product_name, p.category from sales s inner join products p on s.product_id = p.product_id group by s.sale_id, s.emp_id, s.sale_date, s.quantity having s.amount > 1500.00;
++---------+--------+------------+---------------------+----------+----------+---------------+-------------+
+| sale_id | emp_id | product_id | sale_date           | quantity | amount   | product_name  | category    |
++---------+--------+------------+---------------------+----------+----------+---------------+-------------+
+|       2 |    105 |          1 | 2024-01-12 00:00:00 |        2 |  2400.00 | Laptop        | Electronics |
+|       6 |    106 |          1 | 2024-02-14 00:00:00 |        3 | 10000.00 | Laptop        | Electronics |
+|      10 |    110 |          2 | 2024-03-23 00:00:00 |        1 |  3000.00 | Top           | Toys        |
+|       1 |    104 |          3 | 2024-01-10 00:00:00 |        5 |  2500.00 | SaaS License  | Software    |
+|      11 |    103 |          3 | 2024-04-01 00:00:00 |        7 |  3500.00 | SaaS License  | Software    |
+|       9 |    111 |          4 | 2024-02-28 00:00:00 |       10 |  3000.00 | Monitor       | Electronics |
+|      12 |    108 |          5 | 2024-04-30 00:00:00 |        5 |  4000.00 | Cloud Storage | Software    |
++---------+--------+------------+---------------------+----------+----------+---------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> select s.*, p.product_name, p.category from sales s inner join products p on s.product_id = p.product_id group by s.sale_id, s.emp_id, s.quantity having s.amount > 1500.00 order by s.sale_date asc;
++---------+--------+------------+---------------------+----------+----------+---------------+-------------+
+| sale_id | emp_id | product_id | sale_date           | quantity | amount   | product_name  | category    |
++---------+--------+------------+---------------------+----------+----------+---------------+-------------+
+|       1 |    104 |          3 | 2024-01-10 00:00:00 |        5 |  2500.00 | SaaS License  | Software    |
+|       2 |    105 |          1 | 2024-01-12 00:00:00 |        2 |  2400.00 | Laptop        | Electronics |
+|       6 |    106 |          1 | 2024-02-14 00:00:00 |        3 | 10000.00 | Laptop        | Electronics |
+|       9 |    111 |          4 | 2024-02-28 00:00:00 |       10 |  3000.00 | Monitor       | Electronics |
+|      10 |    110 |          2 | 2024-03-23 00:00:00 |        1 |  3000.00 | Top           | Toys        |
+|      11 |    103 |          3 | 2024-04-01 00:00:00 |        7 |  3500.00 | SaaS License  | Software    |
+|      12 |    108 |          5 | 2024-04-30 00:00:00 |        5 |  4000.00 | Cloud Storage | Software    |
++---------+--------+------------+---------------------+----------+----------+---------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from employees;
++--------+----------+------------+-----------+---------+---------------------+
+| emp_id | emp_name | manager_id | salary    | dept_id | hire_date           |
++--------+----------+------------+-----------+---------+---------------------+
+|    101 | Sonu     |       NULL | 120000.00 |       2 | 2021-01-15 09:00:00 |
+|    102 | Ram      |        101 |  95000.00 |       2 | 2021-06-20 15:00:00 |
+|    103 | Dheer    |        101 |  80000.00 |       2 | 2022-03-10 12:00:00 |
+|    104 | David    |       NULL | 110000.00 |       3 | 2020-11-05 01:00:00 |
+|    105 | Montu    |        104 |  70000.00 |       3 | 2022-01-10 14:30:00 |
+|    106 | Hardik   |       NULL | 105000.00 |       1 | 2020-01-07 10:30:00 |
+|    107 | Shreya   |        106 |  95000.00 |       1 | 2022-06-27 16:30:00 |
+|    108 | Devika   |        106 |  85000.00 |       1 | 2023-03-27 16:30:00 |
+|    109 | Yesha    |       NULL | 125000.00 |       4 | 2021-10-10 11:30:00 |
+|    110 | Kavya    |        109 |  75000.00 |       4 | 2021-10-10 13:30:00 |
+|    111 | Nishika  |        109 | 105000.00 |       4 | 2021-10-15 12:30:00 |
+|    112 | Anu      |        104 | 105000.00 |       4 | 2021-10-15 12:30:00 |
++--------+----------+------------+-----------+---------+---------------------+
+12 rows in set (0.00 sec)
+
+mysql> select emp_id, upper(emp_name) as U_E_N, manager_id, salary, dept_id, date_format(hire_date, '%Y-%M') as hire_date_CF from employees;
++--------+---------+------------+-----------+---------+---------------+
+| emp_id | U_E_N   | manager_id | salary    | dept_id | hire_date_CF  |
++--------+---------+------------+-----------+---------+---------------+
+|    101 | SONU    |       NULL | 120000.00 |       2 | 2021-January  |
+|    102 | RAM     |        101 |  95000.00 |       2 | 2021-June     |
+|    103 | DHEER   |        101 |  80000.00 |       2 | 2022-March    |
+|    104 | DAVID   |       NULL | 110000.00 |       3 | 2020-November |
+|    105 | MONTU   |        104 |  70000.00 |       3 | 2022-January  |
+|    106 | HARDIK  |       NULL | 105000.00 |       1 | 2020-January  |
+|    107 | SHREYA  |        106 |  95000.00 |       1 | 2022-June     |
+|    108 | DEVIKA  |        106 |  85000.00 |       1 | 2023-March    |
+|    109 | YESHA   |       NULL | 125000.00 |       4 | 2021-October  |
+|    110 | KAVYA   |        109 |  75000.00 |       4 | 2021-October  |
+|    111 | NISHIKA |        109 | 105000.00 |       4 | 2021-October  |
+|    112 | ANU     |        104 | 105000.00 |       4 | 2021-October  |
++--------+---------+------------+-----------+---------+---------------+
+12 rows in set (0.02 sec)
+
+mysql> select emp_id, upper(emp_name) as U_E_N, manager_id, salary, dept_id, date_format(hire_date, '%Y-%m') as hire_date_CF from employees;
++--------+---------+------------+-----------+---------+--------------+
+| emp_id | U_E_N   | manager_id | salary    | dept_id | hire_date_CF |
++--------+---------+------------+-----------+---------+--------------+
+|    101 | SONU    |       NULL | 120000.00 |       2 | 2021-01      |
+|    102 | RAM     |        101 |  95000.00 |       2 | 2021-06      |
+|    103 | DHEER   |        101 |  80000.00 |       2 | 2022-03      |
+|    104 | DAVID   |       NULL | 110000.00 |       3 | 2020-11      |
+|    105 | MONTU   |        104 |  70000.00 |       3 | 2022-01      |
+|    106 | HARDIK  |       NULL | 105000.00 |       1 | 2020-01      |
+|    107 | SHREYA  |        106 |  95000.00 |       1 | 2022-06      |
+|    108 | DEVIKA  |        106 |  85000.00 |       1 | 2023-03      |
+|    109 | YESHA   |       NULL | 125000.00 |       4 | 2021-10      |
+|    110 | KAVYA   |        109 |  75000.00 |       4 | 2021-10      |
+|    111 | NISHIKA |        109 | 105000.00 |       4 | 2021-10      |
+|    112 | ANU     |        104 | 105000.00 |       4 | 2021-10      |
++--------+---------+------------+-----------+---------+--------------+
+12 rows in set (0.00 sec)
+
+mysql> select * from employees where emp_name like "H%";
++--------+----------+------------+-----------+---------+---------------------+
+| emp_id | emp_name | manager_id | salary    | dept_id | hire_date           |
++--------+----------+------------+-----------+---------+---------------------+
+|    106 | Hardik   |       NULL | 105000.00 |       1 | 2020-01-07 10:30:00 |
++--------+----------+------------+-----------+---------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employees where emp_name like "E%";
+Empty set (0.00 sec)
+
+mysql> select * from employees where emp_name like "e%";
+Empty set (0.00 sec)
+
+mysql> select * from employees where emp_name like "h%";
++--------+----------+------------+-----------+---------+---------------------+
+| emp_id | emp_name | manager_id | salary    | dept_id | hire_date           |
++--------+----------+------------+-----------+---------+---------------------+
+|    106 | Hardik   |       NULL | 105000.00 |       1 | 2020-01-07 10:30:00 |
++--------+----------+------------+-----------+---------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> select emp_id, emp_name, manager_id, salary, hire_date, left(emp_name, 1) as Starting_Letter, count(*) as Total from employees group by Starting_Letter, emp_id, emp_name, manager_id, salary, hire_date order by Total desc;
++--------+----------+------------+-----------+---------------------+-----------------+-------+
+| emp_id | emp_name | manager_id | salary    | hire_date           | Starting_Letter | Total |
++--------+----------+------------+-----------+---------------------+-----------------+-------+
+|    101 | Sonu     |       NULL | 120000.00 | 2021-01-15 09:00:00 | S               |     1 |
+|    102 | Ram      |        101 |  95000.00 | 2021-06-20 15:00:00 | R               |     1 |
+|    103 | Dheer    |        101 |  80000.00 | 2022-03-10 12:00:00 | D               |     1 |
+|    104 | David    |       NULL | 110000.00 | 2020-11-05 01:00:00 | D               |     1 |
+|    105 | Montu    |        104 |  70000.00 | 2022-01-10 14:30:00 | M               |     1 |
+|    106 | Hardik   |       NULL | 105000.00 | 2020-01-07 10:30:00 | H               |     1 |
+|    107 | Shreya   |        106 |  95000.00 | 2022-06-27 16:30:00 | S               |     1 |
+|    108 | Devika   |        106 |  85000.00 | 2023-03-27 16:30:00 | D               |     1 |
+|    109 | Yesha    |       NULL | 125000.00 | 2021-10-10 11:30:00 | Y               |     1 |
+|    110 | Kavya    |        109 |  75000.00 | 2021-10-10 13:30:00 | K               |     1 |
+|    111 | Nishika  |        109 | 105000.00 | 2021-10-15 12:30:00 | N               |     1 |
+|    112 | Anu      |        104 | 105000.00 | 2021-10-15 12:30:00 | A               |     1 |
++--------+----------+------------+-----------+---------------------+-----------------+-------+
+12 rows in set (0.00 sec)
+
+mysql> select emp_id, emp_name, manager_id, salary, hire_date from employees group by left(emp_name, 1), emp_id, emp_name, manager_id, salary, hire_date order by count(*) desc;
++--------+----------+------------+-----------+---------------------+
+| emp_id | emp_name | manager_id | salary    | hire_date           |
++--------+----------+------------+-----------+---------------------+
+|    101 | Sonu     |       NULL | 120000.00 | 2021-01-15 09:00:00 |
+|    102 | Ram      |        101 |  95000.00 | 2021-06-20 15:00:00 |
+|    103 | Dheer    |        101 |  80000.00 | 2022-03-10 12:00:00 |
+|    104 | David    |       NULL | 110000.00 | 2020-11-05 01:00:00 |
+|    105 | Montu    |        104 |  70000.00 | 2022-01-10 14:30:00 |
+|    106 | Hardik   |       NULL | 105000.00 | 2020-01-07 10:30:00 |
+|    107 | Shreya   |        106 |  95000.00 | 2022-06-27 16:30:00 |
+|    108 | Devika   |        106 |  85000.00 | 2023-03-27 16:30:00 |
+|    109 | Yesha    |       NULL | 125000.00 | 2021-10-10 11:30:00 |
+|    110 | Kavya    |        109 |  75000.00 | 2021-10-10 13:30:00 |
+|    111 | Nishika  |        109 | 105000.00 | 2021-10-15 12:30:00 |
+|    112 | Anu      |        104 | 105000.00 | 2021-10-15 12:30:00 |
++--------+----------+------------+-----------+---------------------+
+12 rows in set (0.00 sec)
+
+mysql>
