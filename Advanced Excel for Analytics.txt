@@ -65,4 +65,23 @@ Required Transformation Steps:
 	5. Visualization and Trend Analysis:    
 		Turn metrics into dashboards, trends, comparisons, and targets which are actionable KPs
 
-Section-B (in Excel)
+Section-B (in Excel file: AdExAs_1.xlsm)
+
+Q.1. Use Power Query to perform data profiling on the OnlineRetail dataset, identifying missing values in "CustomerID" and "Description" to quantify data quality impact on KPI accuracy.
+A.1. CustomerID
+     
+     Count - 541909					
+     Empty - 135080
+     Missing - (Empty / Count) * 100 = (135080/541909)*100 = 24.93%
+
+     Description
+
+
+     Count - 541909					
+     Empty - 0
+     Empty String - 1454
+     Missing - ((Empty + Empty String) / Count) * 100 = ((0+1454)/541909)*100 = 0.27%
+
+Q.2. 2. Develop a multi-layered PivotTable to calculate the Average Order Value (AOV) and Revenue per Minute of the day to pinpoint specific peak-traffic hours with low conversion.
+
+A.2.      
