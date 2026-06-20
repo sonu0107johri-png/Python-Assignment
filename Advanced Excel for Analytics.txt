@@ -64,3 +64,5 @@ Required Transformation Steps:
 		Align with objective like revenue growth, customer retention, and operational efficiency
 	5. Visualization and Trend Analysis:    
 		Turn metrics into dashboards, trends, comparisons, and targets which are actionable KPs
+
+Section-B (in Excel)
