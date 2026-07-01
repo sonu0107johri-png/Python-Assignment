@@ -82,6 +82,13 @@ A.1. CustomerID
      Empty String - 1454
      Missing - ((Empty + Empty String) / Count) * 100 = ((0+1454)/541909)*100 = 0.27%
 
-Q.2. 2. Develop a multi-layered PivotTable to calculate the Average Order Value (AOV) and Revenue per Minute of the day to pinpoint specific peak-traffic hours with low conversion.
+Q.2. Develop a multi-layered PivotTable to calculate the Average Order Value (AOV) and Revenue per Minute of the day to pinpoint specific peak-traffic hours with low conversion.
 
-A.2.      
+A.2. In Excel file: AdExAs_1.xlsm
+     
+      The Busiest period is around 16:30 with 1551 orders in every country with Average Order Value only 9.55. This indicates heavy                         customer traffic but low spending per order. Then there is 7:35, when the total orders are just 42 but has the highest Average Order Value of 47. This is the start of the business with low orders but high spending. While on the other hand, on 11:36, the orders are significantly high at 1086 but the revenue is negative making the AOV the only negative and hence the lowest value of the day.
+
+Q.3. Create a dynamic Pareto Chart (80/20 Rule) in Excel to identify the top 20% of products contributing to revenue versus the bottom 20% that may be diluting profit margins. 
+
+A.3. In Excel file: AdExAs_1.xlsm
+     
